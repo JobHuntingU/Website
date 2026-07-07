@@ -14,8 +14,10 @@ import {
 import { Button } from '@/components/ui/button';
 import { Card, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { useContent } from '@/hooks/useContent';
 
 const HomePage = () => {
+  const { getContent } = useContent('home');
   const fadeUp = {
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
@@ -111,9 +113,9 @@ const HomePage = () => {
             className="text-4xl md:text-5xl lg:text-7xl font-bold leading-tight mb-6"
             style={{ letterSpacing: '-0.02em' }}
           >
-            Stop applying blindly.
+            {getContent('hero_title', 'Stop applying blindly.')}
             <br />
-            Start getting interviews.
+            {getContent('hero_subtitle', 'Start getting interviews.')}
           </motion.h1>
 
           <motion.p
@@ -121,8 +123,7 @@ const HomePage = () => {
             transition={{ delay: 0.2 }}
             className="text-lg md:text-xl leading-relaxed max-w-3xl mx-auto mb-8 text-white/90"
           >
-            JobHuntingU combines AI automation + coaching + community to
-            transform your job search into a structured system that actually works.
+            {getContent('hero_description', 'JobHuntingU combines AI automation + coaching + community to transform your job search into a structured system that actually works.')}
           </motion.p>
 
           <motion.div
@@ -170,16 +171,14 @@ const HomePage = () => {
             viewport={{ once: true }}
           >
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-8">
-              The job search is broken.
+              {getContent('problem_title', 'The job search is broken.')}
             </h2>
             <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">
               <p>
-                Most candidates waste months sending resumes into a black hole.
-                No feedback. No strategy. No system. The modern job search is exhausting, isolating, and fraught with rejection.
+                {getContent('problem_p1', "Most candidates waste months sending resumes into a black hole. No feedback. No strategy. No system. The modern job search is exhausting, isolating, and fraught with rejection.")}
               </p>
               <p>
-                We fix that by turning your job search into a repeatable,
-                AI-assisted pipeline that focuses on outcomes—not effort. We combine high-energy community support with cutting-edge AI strategies to help you land your dream role, faster.
+                {getContent('problem_p2', "We fix that by turning your job search into a repeatable, AI-assisted pipeline that focuses on outcomes—not effort. We combine high-energy community support with cutting-edge AI strategies to help you land your dream role, faster.")}
               </p>
             </div>
           </motion.div>

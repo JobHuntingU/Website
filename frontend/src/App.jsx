@@ -8,20 +8,30 @@ import HomePage from './pages/HomePage.jsx';
 import AboutPage from './pages/AboutPage.jsx';
 import ServicesPage from './pages/ServicesPage.jsx';
 import ContactPage from './pages/ContactPage.jsx';
+import CareersPage from './pages/CareersPage.jsx';
+import JobDetailPage from './pages/JobDetailPage.jsx';
+import LoginPage from './pages/LoginPage.jsx';
+import AdminDashboard from './pages/AdminDashboard.jsx';
+import { AdminProvider } from './context/AdminContext.jsx';
 
 function App() {
   return (
-    <Router>
-      <ScrollToTop />
-      <div className="flex min-h-screen flex-col">
-        <Header />
-        <main className="flex-1">
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/services" element={<ServicesPage />} />
-            <Route path="/contact" element={<ContactPage />} />
-            {/* Catch-all route for unknown paths */}
+    <AdminProvider>
+      <Router>
+        <ScrollToTop />
+        <div className="flex min-h-screen flex-col">
+          <Header />
+          <main className="flex-1">
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/services" element={<ServicesPage />} />
+              <Route path="/contact" element={<ContactPage />} />
+              <Route path="/careers" element={<CareersPage />} />
+              <Route path="/careers/:id" element={<JobDetailPage />} />
+              <Route path="/admin/login" element={<LoginPage />} />
+              <Route path="/admin" element={<AdminDashboard />} />
+              {/* Catch-all route for unknown paths */}
             <Route 
               path="*" 
               element={
@@ -36,6 +46,7 @@ function App() {
         <Footer />
       </div>
     </Router>
+    </AdminProvider>
   );
 }
 

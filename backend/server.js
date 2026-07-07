@@ -1,7 +1,8 @@
 const express = require('express');
 const cors = require('cors');
-// require('dotenv').config();
 const path = require('path');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 require('dotenv').config({
   path: path.resolve(__dirname, '../.env')
 });
@@ -9,19 +10,142 @@ require('dotenv').config({
 const app = express();
 const PORT = process.env.PORT || 3001;
 const pool = require('./config/db');
+const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret';
 
 app.use(cors({
   origin: [
     'https://jobhuntingu.com',
-    'https://www.jobhuntingu.com'
+    'https://www.jobhuntingu.com',
+    'http://localhost:3000',
+    'http://localhost:5173'
   ]
 }));
 app.use(express.json());
+
+// --- MIDDLEWARE ---
+const authenticateAdmin = (req, res, next) => {
+  const token = req.headers['authorization']?.split(' ')[1];
+  if (!token) return res.status(401).json({ error: 'Unauthorized' });
+
+  jwt.verify(token, JWT_SECRET, (err, decoded) => {
+    if (err) return res.status(403).json({ error: 'Forbidden' });
+    req.admin = decoded;
+    next();
+  });
+};
 
 app.get('/', (req, res) => {
   res.send('Backend is running!');
 });
 
+// --- AUTH ROUTES ---
+app.post('/api/admin/login', async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const [rows] = await pool.execute('SELECT * FROM admins WHERE email = ?', [email]);
+    const admin = rows[0];
+
+    if (admin && await bcrypt.compare(password, admin.password)) {
+      const token = jwt.sign({ id: admin.id, email: admin.email, role: admin.role }, JWT_SECRET, { expiresIn: '12h' });
+      res.json({ token, admin: { email: admin.email, role: admin.role } });
+    } else {
+      res.status(401).json({ error: 'Invalid credentials' });
+    }
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// --- CONTENT MANAGEMENT ROUTES ---
+app.get('/api/content', async (req, res) => {
+  try {
+    const [rows] = await pool.execute('SELECT * FROM page_content');
+    res.json(rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/api/content', authenticateAdmin, async (req, res) => {
+  const { page_name, section_name, content_key, content_value } = req.body;
+  try {
+    const sql = `
+      INSERT INTO page_content (page_name, section_name, content_key, content_value)
+      VALUES (?, ?, ?, ?)
+      ON DUPLICATE KEY UPDATE content_value = VALUES(content_value)
+    `;
+    await pool.execute(sql, [page_name, section_name, content_key, content_value]);
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// --- LEAD MANAGEMENT ROUTES ---
+app.get('/api/admin/leads', authenticateAdmin, async (req, res) => {
+  try {
+    const [rows] = await pool.execute('SELECT * FROM contact_form ORDER BY created_at DESC');
+    res.json(rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.put('/api/admin/leads/:id/status', authenticateAdmin, async (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
+  try {
+    await pool.execute('UPDATE contact_form SET status = ? WHERE id = ?', [status, id]);
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// --- CAREERS / JOBS ROUTES ---
+app.get('/api/jobs', async (req, res) => {
+  try {
+    const [rows] = await pool.execute('SELECT * FROM jobs WHERE is_active = TRUE ORDER BY date_posted DESC');
+    res.json(rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get('/api/jobs/:id', async (req, res) => {
+  try {
+    const [rows] = await pool.execute('SELECT * FROM jobs WHERE id = ? AND is_active = TRUE', [req.params.id]);
+    if (rows.length === 0) return res.status(404).json({ error: 'Job not found' });
+    res.json(rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/api/admin/jobs', authenticateAdmin, async (req, res) => {
+  const { title, description, location, employment_type, base_salary, valid_through } = req.body;
+  try {
+    const sql = `
+      INSERT INTO jobs (title, description, location, employment_type, base_salary, valid_through)
+      VALUES (?, ?, ?, ?, ?, ?)
+    `;
+    await pool.execute(sql, [title, description, location || 'Remote', employment_type || 'INTERN', base_salary || null, valid_through || null]);
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.delete('/api/admin/jobs/:id', authenticateAdmin, async (req, res) => {
+  try {
+    await pool.execute('UPDATE jobs SET is_active = FALSE WHERE id = ?', [req.params.id]);
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// --- PUBLIC CONTACT ROUTE ---
 app.post('/api/contact', async (req, res) => {
   try {
     const {

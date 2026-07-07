@@ -2,7 +2,12 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api';
 
 const apiClient = {
   get: async (path) => {
-    const response = await fetch(`${API_BASE_URL}${path}`);
+    const token = localStorage.getItem('adminToken');
+    const response = await fetch(`${API_BASE_URL}${path}`, {
+      headers: {
+        ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+      }
+    });
     if (!response.ok) {
       throw new Error(`Error fetching ${path}: ${response.statusText}`);
     }
@@ -10,10 +15,12 @@ const apiClient = {
   },
 
   post: async (path, data) => {
+    const token = localStorage.getItem('adminToken');
     const response = await fetch(`${API_BASE_URL}${path}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        ...(token ? { 'Authorization': `Bearer ${token}` } : {})
       },
       body: JSON.stringify(data),
     });
@@ -24,10 +31,12 @@ const apiClient = {
   },
 
   put: async (path, data) => {
+    const token = localStorage.getItem('adminToken');
     const response = await fetch(`${API_BASE_URL}${path}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
+        ...(token ? { 'Authorization': `Bearer ${token}` } : {})
       },
       body: JSON.stringify(data),
     });

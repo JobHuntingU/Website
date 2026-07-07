@@ -7,6 +7,7 @@ import { Target, Users, Zap, ArrowRight, Sparkles, TrendingUp, CheckCircle2 } fr
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { useContent } from '@/hooks/useContent';
 
 import jerryImage from '../assets/Jerry Jay Hunter - Founder.webp';
 import ashishImage from '../assets/Ashish.webp';
@@ -15,6 +16,7 @@ import amritImage from '../assets/Amrit.webp';
 import siriniImage from '../assets/sirini.webp';
 
 const AboutPage = () => {
+  const { getContent } = useContent('about');
   const fadeInUp = {
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
@@ -114,7 +116,7 @@ const AboutPage = () => {
             style={{ letterSpacing: '-0.02em' }}
             {...fadeInUp}
           >
-            You shouldn't have to job hunt alone.
+            {getContent('hero_title', "You shouldn't have to job hunt alone.")}
           </motion.h1>
           <motion.p 
             className="text-lg md:text-xl leading-relaxed max-w-3xl mx-auto mb-8 text-white/90"
@@ -122,7 +124,7 @@ const AboutPage = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            The modern job search is exhausting, isolating, and fraught with rejection. JobHuntingU is here to change the narrative. We combine high-energy community support with cutting-edge AI strategies to help you land your dream role, faster.
+            {getContent('hero_description', "The modern job search is exhausting, isolating, and fraught with rejection. JobHuntingU is here to change the narrative. We combine high-energy community support with cutting-edge AI strategies to help you land your dream role, faster.")}
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}

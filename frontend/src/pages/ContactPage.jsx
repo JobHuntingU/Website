@@ -11,9 +11,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { useToast } from '@/hooks/use-toast';
+import { useContent } from '@/hooks/useContent';
 import apiClient from '@/lib/apiClient';
 
 const ContactPage = () => {
+  const { getContent } = useContent('contact');
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
@@ -394,8 +396,8 @@ const ContactPage = () => {
                     </div>
                     <div>
                       <p className="font-semibold text-foreground">Email Us</p>
-                      <a href="mailto:jerry@jobhuntingu.com" className="text-muted-foreground hover:text-primary transition-colors">
-                        jerry@jobhuntingu.com
+                      <a href={`mailto:${getContent('contact_email', 'jerry@jobhuntingu.com')}`} className="text-muted-foreground hover:text-primary transition-colors">
+                        {getContent('contact_email', 'jerry@jobhuntingu.com')}
                       </a>
                     </div>
                   </div>
@@ -406,8 +408,8 @@ const ContactPage = () => {
                     </div>
                     <div>
                       <p className="font-semibold text-foreground">Call Us</p>
-                      <a href="tel:+16472028777" className="text-muted-foreground hover:text-primary transition-colors">
-                        +1 (647) 202-8777
+                      <a href={`tel:${getContent('contact_phone', '+16472028777')}`} className="text-muted-foreground hover:text-primary transition-colors">
+                        {getContent('contact_phone', '+1 (647) 202-8777')}
                       </a>
                     </div>
                   </div>
@@ -419,7 +421,7 @@ const ContactPage = () => {
                     <div>
                       <p className="font-semibold text-foreground">Location</p>
                       <p className="text-muted-foreground">
-                        319 W Hastings St Vancouver, BC, Canada<br />Canada
+                        {getContent('contact_location', '319 W Hastings St Vancouver, BC, Canada')}
                       </p>
                     </div>
                   </div>

@@ -5,8 +5,10 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Users, Sparkles, TrendingUp, CheckCircle2, ArrowDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useContent } from '@/hooks/useContent';
 
 const ServicesPage = () => {
+  const { getContent } = useContent('services');
   const fadeInUp = {
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
@@ -24,9 +26,9 @@ const ServicesPage = () => {
     {
       id: 'community',
       icon: TrendingUp,
-      title: 'The Community Hub',
-      subtitle: 'Coming June 27th!',
-      description: 'Accessible expert guidance at a fraction of the cost. Join our Skool community to ask questions, engage with peers, and watch step-by-step courses on mastering the modern job hunt.',
+      title: getContent('community_title', 'The Community Hub'),
+      subtitle: getContent('community_subtitle', 'Coming June 27th!'),
+      description: getContent('community_description', 'Accessible expert guidance at a fraction of the cost. Join our Skool community to ask questions, engage with peers, and watch step-by-step courses on mastering the modern job hunt.'),
       features: [
         'Expert Q&A',
         'Peer community',
@@ -43,9 +45,9 @@ const ServicesPage = () => {
     {
       id: 'mastermind',
       icon: Users,
-      title: 'The Mastermind',
-      subtitle: 'Done With You',
-      description: 'We teach you how to fish in a high-energy, collaborative environment. Meeting multiple times a week, we show you exactly how to leverage modern AI tools to analyze and tailor your resume for specific roles, identify and connect with key stakeholders, and ultimately ace the interview.',
+      title: getContent('mastermind_title', 'The Mastermind'),
+      subtitle: getContent('mastermind_subtitle', 'Done With You'),
+      description: getContent('mastermind_description', 'We teach you how to fish in a high-energy, collaborative environment. Meeting multiple times a week, we show you exactly how to leverage modern AI tools to analyze and tailor your resume for specific roles, identify and connect with key stakeholders, and ultimately ace the interview.'),
       features: [
         'Multiple weekly meetings',
         'AI-powered resume optimization',
@@ -61,9 +63,9 @@ const ServicesPage = () => {
     {
       id: 'vip',
       icon: Sparkles,
-      title: 'The VIP Tier',
-      subtitle: 'Done For You',
-      description: 'This is our white-glove service. We take over the heavy lifting of the full job search cycle. While you focus on interview prep, our sophisticated, automated backend systems handle the rigorous work of processing job descriptions, sourcing roles, applying, and executing follow-ups. We run the pipeline; you take the interviews.',
+      title: getContent('vip_title', 'The VIP Tier'),
+      subtitle: getContent('vip_subtitle', 'Done For You'),
+      description: getContent('vip_description', 'This is our white-glove service. We take over the heavy lifting of the full job search cycle. While you focus on interview prep, our sophisticated, automated backend systems handle the rigorous work of processing job descriptions, sourcing roles, applying, and executing follow-ups. We run the pipeline; you take the interviews.'),
       features: [
         'Full job search automation',
         'Sophisticated backend systems',
