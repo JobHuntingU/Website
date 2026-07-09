@@ -145,6 +145,44 @@ app.delete('/api/admin/jobs/:id', authenticateAdmin, async (req, res) => {
   }
 });
 
+// --- JOB FEEDS (Indeed, LinkedIn, etc.) ---
+app.get('/api/feeds/indeed', async (req, res) => {
+  try {
+    const [jobs] = await pool.execute('SELECT * FROM jobs WHERE is_active = TRUE ORDER BY date_posted DESC');
+    
+    let xml = `<?xml version="1.0" encoding="UTF-8"?>
+<source>
+  <publisher>JobHuntingU</publisher>
+  <publisherurl>https://jobhuntingu.com</publisherurl>
+  <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>`;
+
+    jobs.forEach(job => {
+      xml += `
+  <job>
+    <title><![CDATA[${job.title}]]></title>
+    <date><![CDATA[${new Date(job.date_posted).toUTCString()}]]></date>
+    <referencenumber><![CDATA[${job.id}]]></referencenumber>
+    <url><![CDATA[https://jobhuntingu.com/careers/${job.id}]]></url>
+    <company><![CDATA[${job.company || 'JobHuntingU'}]]></company>
+    <city><![CDATA[${job.location.split('/')[1]?.trim() || 'Vancouver'}]]></city>
+    <state><![CDATA[BC]]></state>
+    <country><![CDATA[CA]]></country>
+    <description><![CDATA[${job.description}]]></description>
+    <salary><![CDATA[${job.base_salary ? `${job.base_salary} ${job.salary_currency}` : ''}]]></salary>
+    <jobtype><![CDATA[${job.employment_type.toLowerCase()}]]></jobtype>
+  </job>`;
+    });
+
+    xml += `
+</source>`;
+
+    res.header('Content-Type', 'application/xml');
+    res.send(xml);
+  } catch (err) {
+    res.status(500).send('Error generating feed');
+  }
+});
+
 // --- PUBLIC CONTACT ROUTE ---
 app.post('/api/contact', async (req, res) => {
   try {
