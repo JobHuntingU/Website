@@ -24,7 +24,13 @@ const AdminDashboard = () => {
 
   // For editing content
   const [editingContent, setEditingContent] = useState(null);
-  const [newJob, setNewJob] = useState({ title: '', description: '', location: 'Remote', employment_type: 'INTERN' });
+  const [newJob, setNewJob] = useState({ 
+    title: '', 
+    description: '', 
+    location: 'Remote', 
+    employment_type: 'INTERN',
+    apply_url: '' 
+  });
 
   useEffect(() => {
     if (!token) {
@@ -36,20 +42,35 @@ const AdminDashboard = () => {
 
   const fetchData = async () => {
     setLoading(true);
+    
+    // Fetch each independently so one failure doesn't block others
     try {
-      const [leadsData, contentData, jobsData] = await Promise.all([
-        apiClient.get('/api/admin/leads'),
-        apiClient.get('/api/content'),
-        apiClient.get('/api/jobs')
-      ]);
+      const leadsData = await apiClient.get('/api/admin/leads');
       setLeads(leadsData);
+    } catch (err) {
+      console.error("Leads fetch failed:", err);
+      toast({ 
+        title: "Leads Error", 
+        description: err.message.includes('401') ? "Session expired. Please logout and login again." : err.message, 
+        variant: "destructive" 
+      });
+    }
+
+    try {
+      const contentData = await apiClient.get('/api/content');
       setContent(contentData);
+    } catch (err) {
+      console.error("Content fetch failed:", err);
+    }
+
+    try {
+      const jobsData = await apiClient.get('/api/jobs');
       setJobs(jobsData);
     } catch (err) {
-      toast({ title: "Error", description: "Failed to fetch dashboard data", variant: "destructive" });
-    } finally {
-      setLoading(false);
+      console.error("Jobs fetch failed:", err);
     }
+
+    setLoading(false);
   };
 
   const saveJob = async (e) => {
@@ -57,7 +78,13 @@ const AdminDashboard = () => {
     try {
       await apiClient.post('/api/admin/jobs', newJob);
       toast({ title: "Job Posted" });
-      setNewJob({ title: '', description: '', location: 'Remote', employment_type: 'INTERN' });
+      setNewJob({ 
+        title: '', 
+        description: '', 
+        location: 'Remote', 
+        employment_type: 'INTERN',
+        apply_url: '' 
+      });
       fetchData();
     } catch (err) {
       toast({ title: "Error", description: "Failed to save job", variant: "destructive" });
@@ -67,7 +94,7 @@ const AdminDashboard = () => {
   const deleteJob = async (id) => {
     try {
       await apiClient.delete(`/api/admin/jobs/${id}`);
-      setJobs(jobs.filter(j => l.id !== id));
+      setJobs(jobs.filter(j => j.id !== id));
       fetchData();
       toast({ title: "Job Removed" });
     } catch (err) {
@@ -187,6 +214,10 @@ const AdminDashboard = () => {
                   <Label>Location</Label>
                   <Input value={newJob.location} onChange={e => setNewJob({...newJob, location: e.target.value})} placeholder="Remote" />
                 </div>
+              </div>
+              <div className="space-y-2">
+                <Label>Application Form Link (URL)</Label>
+                <Input value={newJob.apply_url} onChange={e => setNewJob({...newJob, apply_url: e.target.value})} placeholder="https://airtable.com/..." required />
               </div>
               <div className="space-y-2">
                 <Label>Description (Markdown supported)</Label>

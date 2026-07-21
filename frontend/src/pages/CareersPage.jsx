@@ -112,7 +112,7 @@ const CareersPage = () => {
                         </div>
                       </div>
                       <Button asChild>
-                        <a href="https://airtable.com/applgmrp1xg2aleCP/pag13CsBc8ydwnqJK/form" target="_blank" rel="noopener noreferrer">
+                        <a href={job.apply_url || "https://airtable.com/applgmrp1xg2aleCP/pag13CsBc8ydwnqJK/form"} target="_blank" rel="noopener noreferrer">
                           Apply Now
                         </a>
                       </Button>

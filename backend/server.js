@@ -123,13 +123,21 @@ app.get('/api/jobs/:id', async (req, res) => {
 });
 
 app.post('/api/admin/jobs', authenticateAdmin, async (req, res) => {
-  const { title, description, location, employment_type, base_salary, valid_through } = req.body;
+  const { title, description, location, employment_type, base_salary, valid_through, apply_url } = req.body;
   try {
     const sql = `
-      INSERT INTO jobs (title, description, location, employment_type, base_salary, valid_through)
-      VALUES (?, ?, ?, ?, ?, ?)
+      INSERT INTO jobs (title, description, location, employment_type, base_salary, valid_through, apply_url)
+      VALUES (?, ?, ?, ?, ?, ?, ?)
     `;
-    await pool.execute(sql, [title, description, location || 'Remote', employment_type || 'INTERN', base_salary || null, valid_through || null]);
+    await pool.execute(sql, [
+      title, 
+      description, 
+      location || 'Remote', 
+      employment_type || 'INTERN', 
+      base_salary || null, 
+      valid_through || null,
+      apply_url || null
+    ]);
     res.json({ success: true });
   } catch (err) {
     res.status(500).json({ error: err.message });

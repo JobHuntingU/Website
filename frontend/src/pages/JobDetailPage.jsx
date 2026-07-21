@@ -102,7 +102,7 @@ const JobDetailPage = () => {
               </div>
             </div>
             <Button size="lg" asChild className="shrink-0">
-              <a href="https://airtable.com/applgmrp1xg2aleCP/pag13CsBc8ydwnqJK/form" target="_blank" rel="noopener noreferrer">
+              <a href={job.apply_url || "https://airtable.com/applgmrp1xg2aleCP/pag13CsBc8ydwnqJK/form"} target="_blank" rel="noopener noreferrer">
                 Apply for this position
               </a>
             </Button>
@@ -124,7 +124,7 @@ const JobDetailPage = () => {
           <div className="mt-16 pt-8 border-t text-center">
             <h3 className="text-xl font-bold mb-6">Interested in this role?</h3>
             <Button size="lg" asChild>
-              <a href="https://airtable.com/applgmrp1xg2aleCP/pag13CsBc8ydwnqJK/form" target="_blank" rel="noopener noreferrer">
+              <a href={job.apply_url || "https://airtable.com/applgmrp1xg2aleCP/pag13CsBc8ydwnqJK/form"} target="_blank" rel="noopener noreferrer">
                 Apply Now
               </a>
             </Button>
