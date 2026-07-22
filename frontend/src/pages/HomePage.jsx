@@ -7,7 +7,6 @@ import {
   ArrowRight,
   Users,
   Sparkles,
-  TrendingUp,
   CheckCircle2,
 } from 'lucide-react';
 
@@ -33,19 +32,11 @@ const HomePage = () => {
 
   const servicesPreview = [
     {
-      id: 'community',
-      icon: TrendingUp,
-      title: 'The Community Hub',
-      subtitle: 'Coming June 27th!',
-      description: 'Join our exclusive Skool community. Access expert guidance and engage with peers.',
-      themeClass: 'card-community',
-      badgeClass: 'badge-community',
-    },
-    {
       id: 'mastermind',
       icon: Users,
       title: 'The Mastermind',
       subtitle: 'Done With You',
+      price: '$1,500',
       description: 'Collaborative training where we teach you cutting-edge AI tools for your job search.',
       themeClass: 'card-mastermind',
       badgeClass: 'badge-mastermind',
@@ -55,6 +46,7 @@ const HomePage = () => {
       icon: Sparkles,
       title: 'The VIP Tier',
       subtitle: 'Done For You',
+      price: '$3,500',
       description: 'Our premium white-glove service. We build and manage your automated backend systems.',
       featured: true,
       themeClass: 'card-vip',
@@ -221,7 +213,7 @@ const HomePage = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
             {servicesPreview.map((service, index) => {
               const Icon = service.icon;
               return (
@@ -246,6 +238,10 @@ const HomePage = () => {
                     </div>
                     
                     <h3 className="text-2xl font-bold mb-1">{service.title}</h3>
+                    <div className="flex items-baseline gap-1 mb-4">
+                      <span className="text-2xl font-bold">{service.price}</span>
+                      <span className="text-xs opacity-80 font-medium uppercase tracking-wider">/ package</span>
+                    </div>
                     <p className="text-sm font-semibold mb-4 opacity-90 uppercase tracking-wide">{service.subtitle}</p>
                     
                     <p className="text-base leading-relaxed mb-8 opacity-90 flex-grow">

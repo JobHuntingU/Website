@@ -3,7 +3,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Users, Sparkles, TrendingUp, CheckCircle2, ArrowDown } from 'lucide-react';
+import { Users, Sparkles, CheckCircle2, ArrowDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useContent } from '@/hooks/useContent';
 
@@ -24,25 +24,6 @@ const ServicesPage = () => {
 
   const services = [
     {
-      id: 'community',
-      icon: TrendingUp,
-      title: getContent('community_title', 'The Community Hub'),
-      subtitle: getContent('community_subtitle', 'Coming June 27th!'),
-      description: getContent('community_description', 'Accessible expert guidance at a fraction of the cost. Join our Skool community to ask questions, engage with peers, and watch step-by-step courses on mastering the modern job hunt.'),
-      features: [
-        'Expert Q&A',
-        'Peer community',
-        'Step-by-step courses',
-        'Affordable pricing'
-      ],
-      comingSoon: true,
-      themeClass: 'card-community',
-      badgeClass: 'badge-community',
-      buttonText: 'Book a Discovery Call',
-      buttonVariant: 'outline',
-      hoverEffect: 'hover:-translate-y-1 hover:shadow-lg opacity-90 hover:opacity-100'
-    },
-    {
       id: 'mastermind',
       icon: Users,
       title: getContent('mastermind_title', 'The Mastermind'),
@@ -56,6 +37,7 @@ const ServicesPage = () => {
       ],
       themeClass: 'card-mastermind',
       badgeClass: 'badge-mastermind',
+      price: '$1,500',
       buttonText: 'Book a Discovery Call',
       buttonVariant: 'outline',
       hoverEffect: 'hover:-translate-y-2 hover:shadow-xl'
@@ -76,6 +58,7 @@ const ServicesPage = () => {
       featured: true,
       themeClass: 'card-vip',
       badgeClass: 'badge-vip',
+      price: '$3,500',
       buttonText: 'Book a Discovery Call',
       buttonVariant: 'default',
       hoverEffect: 'hover:-translate-y-2 hover:shadow-2xl scale-100 lg:scale-105 z-10'
@@ -86,7 +69,7 @@ const ServicesPage = () => {
     <>
       <Helmet>
         <title>{`Services - JobHuntingU`}</title>
-        <meta name="description" content="Explore JobHuntingU's service tiers: The Mastermind, The VIP Tier, and The Community Hub. Find the perfect path to transform your job search." />
+        <meta name="description" content="Explore JobHuntingU's service tiers: The Mastermind and The VIP Tier. Find the perfect path to transform your job search." />
       </Helmet>
 
       {/* Hero Section */}
@@ -140,11 +123,11 @@ const ServicesPage = () => {
               Our Ecosystem
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Three distinct tiers designed to meet you where you are and take you where you want to be.
+              Two powerful tiers designed to meet you where you are and take you where you want to be.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
             {services.map((service, index) => {
               const Icon = service.icon;
               return (
@@ -174,6 +157,10 @@ const ServicesPage = () => {
                         )}
                       </div>
                       <h3 className="text-2xl md:text-3xl font-bold mb-2">{service.title}</h3>
+                      <div className="flex items-baseline gap-1 mb-2">
+                        <span className="text-3xl font-extrabold">{service.price}</span>
+                        <span className="text-sm opacity-80 font-medium">/ package</span>
+                      </div>
                       <span className="font-semibold text-lg opacity-90">{service.subtitle}</span>
                     </div>
                     
