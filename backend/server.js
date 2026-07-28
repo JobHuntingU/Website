@@ -146,7 +146,7 @@ app.post('/api/admin/jobs', authenticateAdmin, async (req, res) => {
 
 app.delete('/api/admin/jobs/:id', authenticateAdmin, async (req, res) => {
   try {
-    await pool.execute('UPDATE jobs SET is_active = FALSE WHERE id = ?', [req.params.id]);
+    await pool.execute('DELETE FROM jobs WHERE id = ?', [req.params.id]);
     res.json({ success: true });
   } catch (err) {
     res.status(500).json({ error: err.message });
