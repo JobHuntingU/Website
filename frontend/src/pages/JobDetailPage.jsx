@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import { MapPin, Briefcase, Calendar, ArrowLeft, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import apiClient from '@/lib/apiClient';
+import { marked } from 'marked';
 
 const JobDetailPage = () => {
   const { id } = useParams();
@@ -112,14 +113,10 @@ const JobDetailPage = () => {
 
       <section className="py-16">
         <div className="section-container max-w-4xl">
-          <div className="prose prose-slate max-w-none">
-            {/* Split by double newline for simple paragraph rendering if markdown parser not installed */}
-            {job.description.split('\n\n').map((para, i) => (
-              <p key={i} className="mb-4 text-lg leading-relaxed whitespace-pre-line">
-                {para}
-              </p>
-            ))}
-          </div>
+          <div 
+            className="prose prose-slate dark:prose-invert max-w-none text-lg leading-relaxed"
+            dangerouslySetInnerHTML={{ __html: marked.parse(job.description || '') }}
+          />
           
           <div className="mt-16 pt-8 border-t text-center">
             <h3 className="text-xl font-bold mb-6">Interested in this role?</h3>

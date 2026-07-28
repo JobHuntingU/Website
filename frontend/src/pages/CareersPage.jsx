@@ -8,6 +8,15 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import apiClient from '@/lib/apiClient';
 
+// Helper to strip markdown for clean text previews
+const stripMarkdown = (text) => {
+  if (!text) return '';
+  return text
+    .replace(/[#*`_~\-+]/g, '') // strip simple formatting characters
+    .replace(/\[([^\]]+)\]\([^\)]+\)/g, '$1') // replace links [text](url) with just text
+    .trim();
+};
+
 const CareersPage = () => {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -119,8 +128,8 @@ const CareersPage = () => {
                     </div>
                   </CardHeader>
                   <CardContent>
-                    <div className="prose prose-slate max-w-none line-clamp-3 mb-4">
-                      {job.description}
+                    <div className="text-muted-foreground line-clamp-3 mb-4 text-sm md:text-base leading-relaxed">
+                      {stripMarkdown(job.description)}
                     </div>
                     <Link to={`/careers/${job.id}`} className="text-primary font-semibold flex items-center gap-1 hover:underline">
                       Read full description <ArrowRight className="h-4 w-4" />
