@@ -1,6 +1,10 @@
 # dependencies
 node_modules/
 
+# root package manager configurations
+/package.json
+/package-lock.json
+
 # build output
 dist/
 build/
