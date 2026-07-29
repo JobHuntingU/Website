@@ -8,6 +8,9 @@ import iframeRouteRestorationPlugin from './plugins/vite-plugin-iframe-route-res
 import pocketbaseAuthPlugin from './plugins/vite-plugin-pocketbase-auth.js';
 
 import { readFileSync } from 'node:fs';
+import { createRequire } from 'node:module';
+
+const require = createRequire(import.meta.url);
 
 const pkg = JSON.parse(readFileSync('./package.json', 'utf-8'));
 const allDeps = Object.keys(pkg.dependencies || {});
@@ -323,8 +326,8 @@ export default defineConfig({
 		extensions: ['.jsx', '.js', '.tsx', '.ts', '.json',],
 		alias: {
 			'@': path.resolve(__dirname, './src'),
-			'react': path.resolve(__dirname, './node_modules/react'),
-			'react-dom': path.resolve(__dirname, './node_modules/react-dom'),
+			'react': path.dirname(require.resolve('react/package.json')),
+			'react-dom': path.dirname(require.resolve('react-dom/package.json')),
 		},
 	},
 	build: {
