@@ -4,6 +4,10 @@
   "main": "index.js",
   "license": "MIT",
   "private": true,
+  "engines": {
+    "node": "v18.20.8",
+    "npm": "10.8.2"
+  },
   "workspaces": [
     "frontend",
     "backend"
