@@ -1,0 +1,9 @@
+fastapi
+uvicorn[standard]
+python-docx
+chromadb
+sentence-transformers
+google-generativeai
+python-dotenv
+requests
+python-multipart

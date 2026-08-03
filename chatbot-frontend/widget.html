@@ -1,0 +1,627 @@
+<!--
+  Job Hunting U Chat Widget
+  Embed on any site with:
+    <script src="widget.html"></script>  (see README for the real embed snippet)
+  Or just copy this whole <div>/<style>/<script> block onto any page.
+-->
+<div id="jhu-chat-widget">
+  <button id="jhu-chat-bubble" aria-label="Open chat">
+    <span id="jhu-bubble-icon">💬</span>
+    <span id="jhu-bubble-text">Chat with us</span>
+  </button>
+
+  <div id="jhu-chat-window">
+    <div id="jhu-chat-header">
+      <div>
+        <div id="jhu-chat-title">Job Hunting U Assistant</div>
+        <div id="jhu-chat-tagline">Get answers. Book your free call.</div>
+      </div>
+      <div id="jhu-chat-header-actions">
+        <button id="jhu-book-call-btn" aria-label="Book a discovery call">Book a Call</button>
+        <button id="jhu-chat-close" aria-label="Close chat">&times;</button>
+      </div>
+    </div>
+
+    <div id="jhu-chat-messages"></div>
+
+    <div id="jhu-chat-input-row">
+      <input
+        id="jhu-chat-input"
+        type="text"
+        placeholder="Type your question..."
+        autocomplete="off"
+      />
+      <button id="jhu-chat-send" aria-label="Send message">➤</button>
+    </div>
+
+    <div id="jhu-lead-panel">
+      <div id="jhu-lead-header">
+        <button id="jhu-lead-back" aria-label="Back to chat">&larr;</button>
+        <div>
+          <div id="jhu-lead-title">Book a Discovery Call</div>
+          <div id="jhu-lead-tagline">Tell us a bit about you and Jerry will follow up.</div>
+        </div>
+      </div>
+
+      <form id="jhu-lead-form">
+        <label class="jhu-field">
+          <span>Name</span>
+          <input id="jhu-lead-name" type="text" required autocomplete="name" />
+        </label>
+        <label class="jhu-field">
+          <span>Email</span>
+          <input id="jhu-lead-email" type="email" required autocomplete="email" />
+        </label>
+        <label class="jhu-field">
+          <span>Phone</span>
+          <input id="jhu-lead-phone" type="tel" required autocomplete="tel" />
+        </label>
+        <label class="jhu-field">
+          <span>Resume <em>(optional)</em></span>
+          <input id="jhu-lead-resume" type="file" accept=".pdf,.doc,.docx" />
+        </label>
+        <div id="jhu-lead-error"></div>
+        <button id="jhu-lead-submit" type="submit">Submit</button>
+      </form>
+
+      <div id="jhu-lead-success">
+        <div id="jhu-lead-success-icon">&#10003;</div>
+        <div id="jhu-lead-success-text">Thanks! Jerry will be in touch shortly.</div>
+        <a id="jhu-lead-calendly" href="#" target="_blank" rel="noopener">Pick a time on Jerry's calendar &rarr;</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  #jhu-chat-widget, #jhu-chat-widget * {
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+
+  #jhu-chat-bubble {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 999999;
+    background: #1a73e8;
+    color: #fff;
+    border: none;
+    border-radius: 32px;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(26, 115, 232, 0.4);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  #jhu-chat-bubble:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(26, 115, 232, 0.5);
+  }
+  #jhu-bubble-icon { font-size: 18px; }
+
+  #jhu-chat-window {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 999999;
+    width: 380px;
+    height: 520px;
+    max-width: calc(100vw - 32px);
+    max-height: calc(100vh - 32px);
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  #jhu-chat-window.jhu-open { display: flex; }
+
+  #jhu-chat-header {
+    background: #1a73e8;
+    color: #fff;
+    padding: 16px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+  #jhu-chat-title { font-size: 16px; font-weight: 700; }
+  #jhu-chat-tagline { font-size: 12px; opacity: 0.85; margin-top: 2px; }
+  #jhu-chat-close {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0 4px;
+  }
+
+  #jhu-chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background: #f5f7fa;
+  }
+
+  .jhu-msg {
+    max-width: 85%;
+    padding: 10px 14px;
+    border-radius: 14px;
+    font-size: 14px;
+    line-height: 1.45;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+  .jhu-msg-bot {
+    align-self: flex-start;
+    background: #fff;
+    color: #1f1f1f;
+    border: 1px solid #e3e6eb;
+    border-bottom-left-radius: 4px;
+  }
+  .jhu-msg-user {
+    align-self: flex-end;
+    background: #1a73e8;
+    color: #fff;
+    border-bottom-right-radius: 4px;
+  }
+
+  .jhu-sources {
+    align-self: flex-start;
+    max-width: 85%;
+    margin-top: -6px;
+  }
+  .jhu-sources summary {
+    font-size: 11px;
+    color: #6b7280;
+    cursor: pointer;
+    outline: none;
+  }
+  .jhu-sources-list {
+    font-size: 11px;
+    color: #6b7280;
+    margin-top: 4px;
+    padding-left: 14px;
+  }
+
+  .jhu-typing {
+    align-self: flex-start;
+    display: flex;
+    gap: 4px;
+    padding: 12px 14px;
+    background: #fff;
+    border: 1px solid #e3e6eb;
+    border-radius: 14px;
+    border-bottom-left-radius: 4px;
+  }
+  .jhu-typing span {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #9aa4b2;
+    animation: jhu-bounce 1.2s infinite ease-in-out;
+  }
+  .jhu-typing span:nth-child(2) { animation-delay: 0.15s; }
+  .jhu-typing span:nth-child(3) { animation-delay: 0.3s; }
+  @keyframes jhu-bounce {
+    0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+    30% { transform: translateY(-4px); opacity: 1; }
+  }
+
+  #jhu-chat-input-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px;
+    border-top: 1px solid #e3e6eb;
+    background: #fff;
+    flex-shrink: 0;
+  }
+  #jhu-chat-input {
+    flex: 1;
+    border: 1px solid #d7dbe0;
+    border-radius: 20px;
+    padding: 10px 14px;
+    font-size: 14px;
+    outline: none;
+  }
+  #jhu-chat-input:focus { border-color: #1a73e8; }
+  #jhu-chat-send {
+    background: #1a73e8;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    cursor: pointer;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #jhu-chat-send:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  @media (max-width: 420px) {
+    #jhu-chat-window {
+      right: 16px;
+      bottom: 16px;
+      width: calc(100vw - 32px);
+    }
+    #jhu-chat-bubble { right: 16px; bottom: 16px; }
+  }
+
+  /* ---- Header actions & inline CTA ---- */
+  #jhu-chat-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  #jhu-book-call-btn {
+    background: rgba(255, 255, 255, 0.16);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 14px;
+    padding: 5px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  #jhu-book-call-btn:hover { background: rgba(255, 255, 255, 0.28); }
+
+  .jhu-inline-cta {
+    align-self: flex-start;
+    background: #fff;
+    color: #1a73e8;
+    border: 1px solid #1a73e8;
+    border-radius: 14px;
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: -4px;
+  }
+  .jhu-inline-cta:hover { background: #eaf1fd; }
+
+  /* ---- Lead capture panel ---- */
+  #jhu-lead-panel {
+    display: none;
+    position: absolute;
+    inset: 0;
+    background: #fff;
+    flex-direction: column;
+  }
+  #jhu-lead-panel.jhu-open { display: flex; }
+
+  #jhu-lead-header {
+    background: #1a73e8;
+    color: #fff;
+    padding: 16px 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+  #jhu-lead-back {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 0 2px;
+  }
+  #jhu-lead-title { font-size: 16px; font-weight: 700; }
+  #jhu-lead-tagline { font-size: 12px; opacity: 0.85; margin-top: 2px; }
+
+  #jhu-lead-form {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .jhu-field { display: flex; flex-direction: column; gap: 5px; font-size: 13px; color: #45516d; }
+  .jhu-field span { font-weight: 600; color: #1f1f1f; }
+  .jhu-field em { font-weight: 400; font-style: normal; color: #9aa4b2; }
+  .jhu-field input[type="text"],
+  .jhu-field input[type="email"],
+  .jhu-field input[type="tel"] {
+    border: 1px solid #d7dbe0;
+    border-radius: 8px;
+    padding: 9px 12px;
+    font-size: 14px;
+    outline: none;
+  }
+  .jhu-field input:focus { border-color: #1a73e8; }
+  .jhu-field input[type="file"] { font-size: 12.5px; }
+
+  #jhu-lead-error {
+    color: #c5221f;
+    font-size: 12.5px;
+    min-height: 14px;
+  }
+  #jhu-lead-submit {
+    background: #1a73e8;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    padding: 11px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  #jhu-lead-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+
+  #jhu-lead-success {
+    display: none;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 24px;
+    text-align: center;
+  }
+  #jhu-lead-success-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #e4f1e9;
+    color: #2f6f4e;
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #jhu-lead-success-text { font-size: 15px; color: #1f1f1f; max-width: 240px; }
+  #jhu-lead-calendly {
+    display: inline-block;
+    background: #1a73e8;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 20px;
+    padding: 10px 18px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+</style>
+
+<script>
+(function () {
+  // Update this after deploying the backend (see README > Deploy to Railway).
+  var API_URL = "http://localhost:8000";
+
+  // Set this to Jerry's Calendly (or similar) link once available.
+  var CALENDLY_URL = "";
+
+  var OPENING_MESSAGE =
+    "Hi! I'm here to help you learn about Job Hunting U and how we help " +
+    "job seekers land jobs faster. What questions do you have?";
+
+  var bubble = document.getElementById("jhu-chat-bubble");
+  var chatWindow = document.getElementById("jhu-chat-window");
+  var closeBtn = document.getElementById("jhu-chat-close");
+  var messagesEl = document.getElementById("jhu-chat-messages");
+  var input = document.getElementById("jhu-chat-input");
+  var sendBtn = document.getElementById("jhu-chat-send");
+
+  var bookCallBtn = document.getElementById("jhu-book-call-btn");
+  var leadPanel = document.getElementById("jhu-lead-panel");
+  var leadBackBtn = document.getElementById("jhu-lead-back");
+  var leadForm = document.getElementById("jhu-lead-form");
+  var leadNameInput = document.getElementById("jhu-lead-name");
+  var leadEmailInput = document.getElementById("jhu-lead-email");
+  var leadPhoneInput = document.getElementById("jhu-lead-phone");
+  var leadResumeInput = document.getElementById("jhu-lead-resume");
+  var leadSubmitBtn = document.getElementById("jhu-lead-submit");
+  var leadError = document.getElementById("jhu-lead-error");
+  var leadSuccess = document.getElementById("jhu-lead-success");
+  var leadCalendlyLink = document.getElementById("jhu-lead-calendly");
+
+  var CTA_PATTERN = /discovery call/i;
+
+  var history = []; // [{role: "user"|"assistant", content: "..."}]
+  var hasOpened = false;
+
+  function getLastUserQuestion() {
+    for (var i = history.length - 1; i >= 0; i--) {
+      if (history[i].role === "user") return history[i].content;
+    }
+    return "";
+  }
+
+  function resetLeadForm() {
+    leadForm.reset();
+    leadError.textContent = "";
+    leadForm.style.display = "flex";
+    leadSuccess.style.display = "none";
+    leadSubmitBtn.disabled = false;
+    leadSubmitBtn.textContent = "Submit";
+  }
+
+  function openLeadPanel() {
+    resetLeadForm();
+    leadPanel.classList.add("jhu-open");
+    leadNameInput.focus();
+  }
+
+  function closeLeadPanel() {
+    leadPanel.classList.remove("jhu-open");
+  }
+
+  function scrollToBottom() {
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  }
+
+  function addMessage(role, text, sources) {
+    var wrapper = document.createElement("div");
+    wrapper.className = "jhu-msg " + (role === "user" ? "jhu-msg-user" : "jhu-msg-bot");
+    wrapper.textContent = text;
+    messagesEl.appendChild(wrapper);
+
+    if (sources && sources.length > 0) {
+      var details = document.createElement("details");
+      details.className = "jhu-sources";
+      var summary = document.createElement("summary");
+      summary.textContent = "Sources (" + sources.length + ")";
+      details.appendChild(summary);
+      var list = document.createElement("div");
+      list.className = "jhu-sources-list";
+      list.textContent = sources.join(", ");
+      details.appendChild(list);
+      messagesEl.appendChild(details);
+    }
+
+    if (role !== "user" && CTA_PATTERN.test(text)) {
+      var ctaBtn = document.createElement("button");
+      ctaBtn.className = "jhu-inline-cta";
+      ctaBtn.textContent = "Yes, let's talk →";
+      ctaBtn.addEventListener("click", openLeadPanel);
+      messagesEl.appendChild(ctaBtn);
+    }
+
+    scrollToBottom();
+  }
+
+  function showTyping() {
+    var typing = document.createElement("div");
+    typing.className = "jhu-typing";
+    typing.id = "jhu-typing-indicator";
+    typing.innerHTML = "<span></span><span></span><span></span>";
+    messagesEl.appendChild(typing);
+    scrollToBottom();
+  }
+
+  function hideTyping() {
+    var typing = document.getElementById("jhu-typing-indicator");
+    if (typing) typing.remove();
+  }
+
+  function setSending(isSending) {
+    input.disabled = isSending;
+    sendBtn.disabled = isSending;
+  }
+
+  async function sendMessage() {
+    var text = input.value.trim();
+    if (!text) return;
+
+    addMessage("user", text);
+    history.push({ role: "user", content: text });
+    input.value = "";
+    setSending(true);
+    showTyping();
+
+    try {
+      var res = await fetch(API_URL + "/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: text, history: history }),
+      });
+
+      if (!res.ok) throw new Error("Request failed with status " + res.status);
+
+      var data = await res.json();
+      hideTyping();
+      addMessage("assistant", data.response, data.sources);
+      history.push({ role: "assistant", content: data.response });
+    } catch (err) {
+      hideTyping();
+      addMessage(
+        "assistant",
+        "Sorry, I'm having trouble connecting right now. Please try again in a moment, " +
+          "or book a discovery call with Jerry directly."
+      );
+      console.error("JHU chat widget error:", err);
+    } finally {
+      setSending(false);
+      input.focus();
+    }
+  }
+
+  bubble.addEventListener("click", function () {
+    chatWindow.classList.add("jhu-open");
+    bubble.style.display = "none";
+    if (!hasOpened) {
+      hasOpened = true;
+      addMessage("assistant", OPENING_MESSAGE);
+    }
+    input.focus();
+  });
+
+  closeBtn.addEventListener("click", function () {
+    chatWindow.classList.remove("jhu-open");
+    bubble.style.display = "flex";
+  });
+
+  sendBtn.addEventListener("click", sendMessage);
+  input.addEventListener("keydown", function (e) {
+    if (e.key === "Enter") sendMessage();
+  });
+
+  bookCallBtn.addEventListener("click", openLeadPanel);
+  leadBackBtn.addEventListener("click", closeLeadPanel);
+
+  leadForm.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    leadError.textContent = "";
+
+    var name = leadNameInput.value.trim();
+    var email = leadEmailInput.value.trim();
+    var phone = leadPhoneInput.value.trim();
+    var resumeFile = leadResumeInput.files[0];
+
+    if (!name || !email || !phone) {
+      leadError.textContent = "Please fill in your name, email, and phone.";
+      return;
+    }
+    if (resumeFile && resumeFile.size > 5 * 1024 * 1024) {
+      leadError.textContent = "Resume file is too large (max 5MB).";
+      return;
+    }
+
+    var formData = new FormData();
+    formData.append("name", name);
+    formData.append("email", email);
+    formData.append("phone", phone);
+    formData.append("question", getLastUserQuestion());
+    if (resumeFile) formData.append("resume", resumeFile);
+
+    leadSubmitBtn.disabled = true;
+    leadSubmitBtn.textContent = "Submitting...";
+
+    try {
+      var res = await fetch(API_URL + "/leads", { method: "POST", body: formData });
+      if (!res.ok) throw new Error("Request failed with status " + res.status);
+
+      leadForm.style.display = "none";
+      leadSuccess.style.display = "flex";
+      if (CALENDLY_URL) {
+        leadCalendlyLink.href = CALENDLY_URL;
+        leadCalendlyLink.style.display = "inline-block";
+      } else {
+        leadCalendlyLink.style.display = "none";
+      }
+    } catch (err) {
+      leadError.textContent = "Something went wrong submitting your info. Please try again.";
+      console.error("JHU lead form error:", err);
+    } finally {
+      leadSubmitBtn.disabled = false;
+      leadSubmitBtn.textContent = "Submit";
+    }
+  });
+})();
+</script>
