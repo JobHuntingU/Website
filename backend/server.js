@@ -12,6 +12,32 @@ const PORT = process.env.PORT || 3001;
 const pool = require('./config/db');
 const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret';
 
+// --- DYNAMIC DATABASE MIGRATION ---
+(async () => {
+  try {
+    console.log('Validating Database Tables...');
+    // Create Blog Posts Table
+    await pool.execute(`
+      CREATE TABLE IF NOT EXISTS blog_posts (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        title VARCHAR(255) NOT NULL,
+        slug VARCHAR(255) NOT NULL UNIQUE,
+        excerpt TEXT,
+        content TEXT NOT NULL,
+        category VARCHAR(100) DEFAULT 'General',
+        author_name VARCHAR(100) DEFAULT 'Jerry J Hunter',
+        read_time VARCHAR(50) DEFAULT '5 min read',
+        image_url VARCHAR(255) DEFAULT 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=800&q=80',
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+      )
+    `);
+    console.log('✅ Database Tables successfully synchronized.');
+  } catch (err) {
+    console.error('❌ Database migration failed:', err.message);
+  }
+})();
+
 app.use(cors({
   origin: [
     'https://jobhuntingu.com',
@@ -153,6 +179,54 @@ app.delete('/api/admin/jobs/:id', authenticateAdmin, async (req, res) => {
   }
 });
 
+// --- SITEMAP (Dynamic for Google indexing) ---
+app.get('/sitemap.xml', async (req, res) => {
+  try {
+    const [jobs] = await pool.execute('SELECT id FROM jobs WHERE is_active = TRUE ORDER BY date_posted DESC');
+    const [blogs] = await pool.execute('SELECT slug FROM blog_posts ORDER BY created_at DESC');
+    
+    const baseUrl = 'https://jobhuntingu.com';
+    const today = new Date().toISOString().split('T')[0];
+    
+    let xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>${baseUrl}/</loc><lastmod>${today}</lastmod><priority>1.0</priority></url>
+  <url><loc>${baseUrl}/about</loc><lastmod>${today}</lastmod><priority>0.8</priority></url>
+  <url><loc>${baseUrl}/services</loc><lastmod>${today}</lastmod><priority>0.9</priority></url>
+  <url><loc>${baseUrl}/contact</loc><lastmod>${today}</lastmod><priority>0.9</priority></url>
+  <url><loc>${baseUrl}/blog</loc><lastmod>${today}</lastmod><priority>0.9</priority></url>
+  <url><loc>${baseUrl}/careers</loc><lastmod>${today}</lastmod><priority>0.9</priority></url>`;
+
+    // Dynamic Jobs
+    jobs.forEach(job => {
+      xml += `
+  <url>
+    <loc>${baseUrl}/careers/${job.id}</loc>
+    <lastmod>${today}</lastmod>
+    <priority>0.8</priority>
+  </url>`;
+    });
+
+    // Dynamic Blogs
+    blogs.forEach(blog => {
+      xml += `
+  <url>
+    <loc>${baseUrl}/blog/${blog.slug}</loc>
+    <lastmod>${today}</lastmod>
+    <priority>0.7</priority>
+  </url>`;
+    });
+
+    xml += '\n</urlset>';
+    
+    res.header('Content-Type', 'application/xml');
+    res.send(xml);
+  } catch (err) {
+    console.error('Sitemap error:', err);
+    res.status(500).send('Error generating sitemap');
+  }
+});
+
 // --- JOB FEEDS (Indeed, LinkedIn, etc.) ---
 app.get('/api/feeds/indeed', async (req, res) => {
   try {
@@ -188,6 +262,61 @@ app.get('/api/feeds/indeed', async (req, res) => {
     res.send(xml);
   } catch (err) {
     res.status(500).send('Error generating feed');
+  }
+});
+
+// --- PUBLIC BLOG ENDPOINTS ---
+app.get('/api/blog', async (req, res) => {
+  try {
+    const [rows] = await pool.execute('SELECT * FROM blog_posts ORDER BY created_at DESC');
+    res.json(rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get('/api/blog/:slug', async (req, res) => {
+  try {
+    const [rows] = await pool.execute('SELECT * FROM blog_posts WHERE slug = ?', [req.params.slug]);
+    if (rows.length === 0) return res.status(404).json({ error: 'Blog post not found' });
+    res.json(rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// --- ADMIN BLOG ENDPOINTS ---
+app.post('/api/admin/blog', authenticateAdmin, async (req, res) => {
+  const { id, title, slug, excerpt, content, category, author_name, read_time, image_url } = req.body;
+  try {
+    if (id) {
+      // Update
+      const sql = `
+        UPDATE blog_posts 
+        SET title = ?, slug = ?, excerpt = ?, content = ?, category = ?, author_name = ?, read_time = ?, image_url = ?
+        WHERE id = ?
+      `;
+      await pool.execute(sql, [title, slug, excerpt, content, category || 'General', author_name || 'Jerry J Hunter', read_time || '5 min read', image_url, id]);
+    } else {
+      // Create
+      const sql = `
+        INSERT INTO blog_posts (title, slug, excerpt, content, category, author_name, read_time, image_url)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+      `;
+      await pool.execute(sql, [title, slug, excerpt, content, category || 'General', author_name || 'Jerry J Hunter', read_time || '5 min read', image_url]);
+    }
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.delete('/api/admin/blog/:id', authenticateAdmin, async (req, res) => {
+  try {
+    await pool.execute('DELETE FROM blog_posts WHERE id = ?', [req.params.id]);
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 });
 

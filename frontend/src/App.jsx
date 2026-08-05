@@ -10,6 +10,8 @@ import ServicesPage from './pages/ServicesPage.jsx';
 import ContactPage from './pages/ContactPage.jsx';
 import CareersPage from './pages/CareersPage.jsx';
 import JobDetailPage from './pages/JobDetailPage.jsx';
+import BlogPage from './pages/BlogPage.jsx';
+import BlogDetailPage from './pages/BlogDetailPage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
 import AdminDashboard from './pages/AdminDashboard.jsx';
 import { AdminProvider } from './context/AdminContext.jsx';
@@ -29,6 +31,8 @@ function App() {
               <Route path="/contact" element={<ContactPage />} />
               <Route path="/careers" element={<CareersPage />} />
               <Route path="/careers/:id" element={<JobDetailPage />} />
+              <Route path="/blog" element={<BlogPage />} />
+              <Route path="/blog/:slug" element={<BlogDetailPage />} />
               <Route path="/admin/login" element={<LoginPage />} />
               <Route path="/admin" element={<AdminDashboard />} />
               {/* Catch-all route for unknown paths */}

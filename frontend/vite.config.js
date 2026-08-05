@@ -320,6 +320,10 @@ export default defineConfig({
 				changeOrigin: true,
 				// Removed the rewrite that was stripping /api
 			},
+			'/sitemap.xml': {
+				target: 'http://localhost:3001',
+				changeOrigin: true,
+			},
 		},
 	},
 	resolve: {
