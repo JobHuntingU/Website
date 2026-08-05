@@ -1,6 +1,6 @@
 User-agent: *
 Allow: /
 
-# Point to the dynamic sitemap served by the backend
-Sitemap: https://api.jobhuntingu.com/sitemap.xml
+# Point to the sitemap index which points to the API
+Sitemap: https://jobhuntingu.com/sitemap.xml
 # LLMS: https://jobhuntingu.com/llms.txt
