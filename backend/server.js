@@ -179,6 +179,54 @@ app.delete('/api/admin/jobs/:id', authenticateAdmin, async (req, res) => {
   }
 });
 
+// --- SITEMAP (Dynamic for Google indexing) ---
+app.get('/sitemap.xml', async (req, res) => {
+  try {
+    const [jobs] = await pool.execute('SELECT id FROM jobs WHERE is_active = TRUE ORDER BY date_posted DESC');
+    const [blogs] = await pool.execute('SELECT slug FROM blog_posts ORDER BY created_at DESC');
+    
+    const baseUrl = 'https://jobhuntingu.com';
+    const today = new Date().toISOString().split('T')[0];
+    
+    let xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>${baseUrl}/</loc><lastmod>${today}</lastmod><priority>1.0</priority></url>
+  <url><loc>${baseUrl}/about</loc><lastmod>${today}</lastmod><priority>0.8</priority></url>
+  <url><loc>${baseUrl}/services</loc><lastmod>${today}</lastmod><priority>0.9</priority></url>
+  <url><loc>${baseUrl}/contact</loc><lastmod>${today}</lastmod><priority>0.9</priority></url>
+  <url><loc>${baseUrl}/blog</loc><lastmod>${today}</lastmod><priority>0.9</priority></url>
+  <url><loc>${baseUrl}/careers</loc><lastmod>${today}</lastmod><priority>0.9</priority></url>`;
+
+    // Dynamic Jobs
+    jobs.forEach(job => {
+      xml += `
+  <url>
+    <loc>${baseUrl}/careers/${job.id}</loc>
+    <lastmod>${today}</lastmod>
+    <priority>0.8</priority>
+  </url>`;
+    });
+
+    // Dynamic Blogs
+    blogs.forEach(blog => {
+      xml += `
+  <url>
+    <loc>${baseUrl}/blog/${blog.slug}</loc>
+    <lastmod>${today}</lastmod>
+    <priority>0.7</priority>
+  </url>`;
+    });
+
+    xml += '\n</urlset>';
+    
+    res.header('Content-Type', 'application/xml');
+    res.send(xml);
+  } catch (err) {
+    console.error('Sitemap error:', err);
+    res.status(500).send('Error generating sitemap');
+  }
+});
+
 // --- JOB FEEDS (Indeed, LinkedIn, etc.) ---
 app.get('/api/feeds/indeed', async (req, res) => {
   try {
