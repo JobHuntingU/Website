@@ -14,7 +14,7 @@ async function migrate() {
 
   // 2. Connection to NEW VPS DB
   const newDb = await mysql.createConnection({
-    host: 'localhost', // Run this from VPS terminal while container is up
+    host: process.env.DB_HOST || 'localhost', 
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME
