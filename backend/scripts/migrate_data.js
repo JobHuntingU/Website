@@ -33,7 +33,7 @@ async function migrate() {
     database: process.env.DB_NAME
   });
 
-  const tables = ['jobs', 'blog_posts', 'admins'];
+  const tables = ['jobs', 'blog_posts', 'admins', 'contact_form', 'page_content'];
 
   for (const table of tables) {
     console.log(`📦 Migrating table: ${table}...`);
