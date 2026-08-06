@@ -38,7 +38,11 @@ async function migrate() {
   for (const table of tables) {
     console.log(`📦 Migrating table: ${table}...`);
     
-    // Fetch from old
+    // 1. Get schema from old and create in new if doesn't exist
+    const [[{ 'Create Table': createSql }]] = await oldDb.execute(`SHOW CREATE TABLE ${table}`);
+    await newDb.execute(createSql.replace(`CREATE TABLE \`${table}\``, `CREATE TABLE IF NOT EXISTS \`${table}\``));
+
+    // 2. Fetch from old
     const [rows] = await oldDb.execute(`SELECT * FROM ${table}`);
     
     if (rows.length === 0) {
