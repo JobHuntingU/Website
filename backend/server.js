@@ -240,7 +240,7 @@ app.delete('/api/admin/jobs/:id', authenticateAdmin, async (req, res) => {
 });
 
 // --- SITEMAP (Dynamic for Google indexing) ---
-app.get('/sitemap.xml', async (req, res) => {
+app.get('/api/sitemap.xml', async (req, res) => {
   try {
     const [jobs] = await pool.execute('SELECT id FROM jobs WHERE is_active = TRUE ORDER BY date_posted DESC');
     const [blogs] = await pool.execute('SELECT slug FROM blog_posts ORDER BY created_at DESC');
