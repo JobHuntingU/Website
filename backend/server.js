@@ -16,6 +16,7 @@ const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret';
 (async () => {
   try {
     console.log('Validating Database Tables...');
+    
     // Create Blog Posts Table
     await pool.execute(`
       CREATE TABLE IF NOT EXISTS blog_posts (
@@ -32,6 +33,60 @@ const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret';
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
       )
     `);
+
+    // Create Jobs Table
+    await pool.execute(`
+      CREATE TABLE IF NOT EXISTS jobs (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        title VARCHAR(255) NOT NULL,
+        description TEXT NOT NULL,
+        location VARCHAR(255) DEFAULT 'Remote',
+        employment_type ENUM('FULL_TIME', 'PART_TIME', 'CONTRACT', 'INTERN') DEFAULT 'FULL_TIME',
+        base_salary VARCHAR(100),
+        salary_currency VARCHAR(10) DEFAULT 'CAD',
+        date_posted TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        valid_through DATE,
+        is_active BOOLEAN DEFAULT TRUE,
+        apply_url TEXT
+      )
+    `);
+
+    // Create Admins Table
+    await pool.execute(`
+      CREATE TABLE IF NOT EXISTS admins (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        email VARCHAR(255) NOT NULL UNIQUE,
+        password VARCHAR(255) NOT NULL,
+        role VARCHAR(50) DEFAULT 'admin',
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+
+    // Create Page Content Table
+    await pool.execute(`
+      CREATE TABLE IF NOT EXISTS page_content (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        page_name VARCHAR(100) NOT NULL,
+        section_name VARCHAR(100) NOT NULL,
+        content_key VARCHAR(100) NOT NULL,
+        content_value TEXT,
+        UNIQUE KEY idx_content (page_name, section_name, content_key)
+      )
+    `);
+
+    // Create Contact Form Table
+    await pool.execute(`
+      CREATE TABLE IF NOT EXISTS contact_form (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(255),
+        email VARCHAR(255),
+        subject VARCHAR(255),
+        message TEXT,
+        status VARCHAR(50) DEFAULT 'NEW',
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+
     console.log('✅ Database Tables successfully synchronized.');
   } catch (err) {
     console.error('❌ Database migration failed:', err.message);
