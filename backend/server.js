@@ -47,7 +47,8 @@ const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret';
         date_posted TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         valid_through DATE,
         is_active BOOLEAN DEFAULT TRUE,
-        apply_url TEXT
+        apply_url TEXT,
+        company VARCHAR(255) DEFAULT 'JobHuntingU'
       )
     `);
 
@@ -78,10 +79,14 @@ const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret';
     await pool.execute(`
       CREATE TABLE IF NOT EXISTS contact_form (
         id INT AUTO_INCREMENT PRIMARY KEY,
-        name VARCHAR(255),
-        email VARCHAR(255),
-        subject VARCHAR(255),
+        full_name VARCHAR(255) NOT NULL,
+        email VARCHAR(255) NOT NULL,
+        phone VARCHAR(50),
+        job_title VARCHAR(255),
+        service VARCHAR(255),
+        preferred_contact VARCHAR(50),
         message TEXT,
+        job_id INT,
         status VARCHAR(50) DEFAULT 'NEW',
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
