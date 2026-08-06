@@ -1,6 +1,6 @@
-// Use /api as the base for all requests in production (Traefik/Nginx will route this)
-// In local development, Vite proxy handles /api -> localhost:3001
-const API_BASE_URL = '/api';
+// Use relative path. 
+// Components like CareersPage already use full paths like '/api/jobs'
+const API_BASE_URL = '';
 
 const apiClient = {
   get: async (path) => {
