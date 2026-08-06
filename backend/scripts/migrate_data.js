@@ -1,5 +1,5 @@
 const mysql = require('mysql2/promise');
-require('dotenv').config({ path: '../.env' });
+// No need for dotenv here, Docker injects the environment variables automatically
 
 async function migrate() {
   console.log('🚀 Starting Data Migration from Hostinger to VPS...');
@@ -12,9 +12,9 @@ async function migrate() {
     database: process.env.OLD_DB_NAME
   });
 
-  // 2. Connection to NEW VPS DB
+  // 2. Connection to NEW VPS DB (Using Docker service name 'db')
   const newDb = await mysql.createConnection({
-    host: process.env.DB_HOST || 'localhost', 
+    host: process.env.DB_HOST || 'db', 
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME
