@@ -7,3 +7,5 @@ reomved branch protection now testing
 test dummy branch
 
 testing main after removing ruleset pull req
+
+completely removed the ruleset
