@@ -1,0 +1,38 @@
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    # Ports removed as Traefik handles external traffic
+    depends_on:
+      - backend
+    networks:
+      - jhu-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.jhu-frontend.rule=Host(`jobhuntingu.com`) || Host(`www.jobhuntingu.com`)"
+      - "traefik.http.routers.jhu-frontend.entrypoints=websecure"
+      - "traefik.http.routers.jhu-frontend.tls=true"
+      - "traefik.http.routers.jhu-frontend.tls.certresolver=myresolver"
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    networks:
+      - jhu-network
+    expose:
+      - "3001"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.jhu-backend.rule=(Host(`jobhuntingu.com`) || Host(`www.jobhuntingu.com`)) && PathPrefix(`/api`)"
+      - "traefik.http.routers.jhu-backend.entrypoints=websecure"
+      - "traefik.http.routers.jhu-backend.tls=true"
+      - "traefik.http.routers.jhu-backend.tls.certresolver=myresolver"
+      - "traefik.http.services.jhu-backend.loadbalancer.server.port=3001"
+
+networks:
+  jhu-network:
+    external: true # Often Hostinger uses a shared network for Traefik

@@ -1,4 +1,6 @@
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
+// Use /api as the base for all requests in production (Traefik/Nginx will route this)
+// In local development, Vite proxy handles /api -> localhost:3001
+const API_BASE_URL = '/api';
 
 const apiClient = {
   get: async (path) => {

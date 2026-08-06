@@ -46,3 +46,6 @@ coverage/
 
 # eslint cache
 .eslintcache
+
+chatbot-backend/jhu_vectordb/
+chatbot-backend/__pycache__/
