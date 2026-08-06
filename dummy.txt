@@ -9,3 +9,5 @@ test dummy branch
 testing main after removing ruleset pull req
 
 completely removed the ruleset
+
+testing after removing ruleset and fixing deploy automatic vs commit miss match
