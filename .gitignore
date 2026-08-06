@@ -48,6 +48,8 @@ coverage/
 .eslintcache
 # Python (chatbot-backend)
 chatbot-backend/venv/
-chatbot-backend/__pycache__/
-chatbot-backend/*.pyc
+chatbot-backend/.venv/
 chatbot-backend/jhu_vectordb/
+chatbot-backend/__pycache__/
+*.pyc
+chatbot-backend/*.pyc
