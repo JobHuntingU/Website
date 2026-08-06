@@ -25,7 +25,7 @@ services:
       - "traefik.http.routers.jhu-frontend.rule=Host(`jobhuntingu.com`) || Host(`www.jobhuntingu.com`)"
       - "traefik.http.routers.jhu-frontend.entrypoints=websecure"
       - "traefik.http.routers.jhu-frontend.tls=true"
-      - "traefik.http.routers.jhu-frontend.tls.certresolver=http"
+      - "traefik.http.routers.jhu-frontend.tls.certresolver=letsencrypt"
 
   backend:
     build:
@@ -44,7 +44,7 @@ services:
       - "traefik.http.routers.jhu-backend.rule=(Host(`jobhuntingu.com`) || Host(`www.jobhuntingu.com`)) && PathPrefix(`/api`)"
       - "traefik.http.routers.jhu-backend.entrypoints=websecure"
       - "traefik.http.routers.jhu-backend.tls=true"
-      - "traefik.http.routers.jhu-backend.tls.certresolver=http"
+      - "traefik.http.routers.jhu-backend.tls.certresolver=letsencrypt"
       - "traefik.http.services.jhu-backend.loadbalancer.server.port=3001"
 
 volumes:
