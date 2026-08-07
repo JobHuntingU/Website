@@ -1,4 +1,6 @@
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
+// Use relative path. 
+// Components like CareersPage already use full paths like '/api/jobs'
+const API_BASE_URL = '';
 
 const apiClient = {
   get: async (path) => {
