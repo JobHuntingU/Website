@@ -7,6 +7,8 @@ services:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       MYSQL_USER: ${DB_USER}
       MYSQL_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "127.0.0.1:3306:3306" # Securely expose only to VPS localhost for tunneling
     volumes:
       - db_data:/var/lib/mysql
     networks:
@@ -16,6 +18,8 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+    ports:
+      - "3000:80" # For local testing: http://localhost:3000
     depends_on:
       - backend
     networks:
@@ -33,6 +37,8 @@ services:
       dockerfile: Dockerfile
     env_file:
       - .env
+    ports:
+      - "3001:3001" # For local testing: http://localhost:3001
     depends_on:
       - db
     networks:
@@ -45,6 +51,7 @@ services:
       - "traefik.http.routers.jhu-backend.entrypoints=websecure"
       - "traefik.http.routers.jhu-backend.tls=true"
       - "traefik.http.routers.jhu-backend.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.jhu-backend.priority=100"
       - "traefik.http.services.jhu-backend.loadbalancer.server.port=3001"
 
 volumes:
