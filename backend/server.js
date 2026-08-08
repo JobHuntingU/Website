@@ -3,9 +3,12 @@ const cors = require('cors');
 const path = require('path');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-require('dotenv').config({
-  path: path.resolve(__dirname, '../.env')
-});
+// Load .env only if NOT running in Docker (Docker provides env via compose)
+if (!process.env.DB_HOST) {
+  require('dotenv').config({
+    path: path.resolve(__dirname, '../.env')
+  });
+}
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -15,7 +18,7 @@ const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret';
 // --- DYNAMIC DATABASE MIGRATION ---
 (async () => {
   try {
-    console.log('Validating Database Tables...');
+    console.log(`Validating Database Connection to ${process.env.DB_HOST}:${process.env.DB_PORT || 3306}...`);
     
     // Create Blog Posts Table
     await pool.execute(`
@@ -94,7 +97,7 @@ const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret';
 
     console.log('✅ Database Tables successfully synchronized.');
   } catch (err) {
-    console.error('❌ Database migration failed:', err.message);
+    console.error('❌ Database migration failed:', err);
   }
 })();
 
