@@ -75,8 +75,6 @@ services:
       - "traefik.http.routers.jhu-chatbot.tls=true"
       - "traefik.http.routers.jhu-chatbot.tls.certresolver=letsencrypt"
       - "traefik.http.routers.jhu-chatbot.priority=200"
-      - "traefik.http.routers.jhu-chatbot.middlewares=jhu-chatbot-stripprefix"
-      - "traefik.http.middlewares.jhu-chatbot-stripprefix.stripprefix.prefixes=/api/chatbot"
       - "traefik.http.services.jhu-chatbot.loadbalancer.server.port=8000"
 
 volumes:

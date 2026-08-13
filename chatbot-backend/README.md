@@ -94,13 +94,13 @@ uvicorn main:app --reload --port 8000
 Check it's healthy:
 
 ```bash
-curl http://localhost:8000/health
+curl http://localhost:8000/api/chatbot/health
 ```
 
 Test a query:
 
 ```bash
-curl -X POST http://localhost:8000/chat \
+curl -X POST http://localhost:8000/api/chatbot/chat \
   -H "Content-Type: application/json" \
   -d '{"message": "How much does Job Hunting U cost?", "history": []}'
 ```

@@ -48,13 +48,13 @@ class ChatResponse(BaseModel):
     success: bool
 
 
-@app.get("/health")
+@app.get("/api/chatbot/health")
 def health():
     gemini_key_present = bool(os.getenv("GEMINI_API_KEY"))
     return {"status": "ok", "gemini_api_key_configured": gemini_key_present}
 
 
-@app.post("/chat", response_model=ChatResponse)
+@app.post("/api/chatbot/chat", response_model=ChatResponse)
 def chat(request: ChatRequest):
     if not request.message or not request.message.strip():
         raise HTTPException(status_code=400, detail="message must not be empty")
@@ -77,7 +77,7 @@ def chat(request: ChatRequest):
     return ChatResponse(**result)
 
 
-@app.post("/leads")
+@app.post("/api/chatbot/leads")
 async def submit_lead(
     name: str = Form(...),
     email: str = Form(...),
