@@ -1,6 +1,12 @@
-// Use relative path. 
-// Components like CareersPage already use full paths like '/api/jobs'
-const API_BASE_URL = '';
+// Use relative path for production, but explicit port for local Docker testing
+const getBaseUrl = () => {
+  if (typeof window !== 'undefined' && window.location.hostname === 'localhost') {
+    return 'http://localhost:3001';
+  }
+  return ''; // Relative path for production (Traefik handles routing)
+};
+
+const API_BASE_URL = getBaseUrl();
 
 const apiClient = {
   get: async (path) => {
