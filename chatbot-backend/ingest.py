@@ -25,7 +25,7 @@ from sentence_transformers import SentenceTransformer
 load_dotenv()
 
 KNOWLEDGE_BASE_DIR = Path(
-    os.getenv("KNOWLEDGE_BASE_DIR", "../../knowledge_base_jhu")
+    os.getenv("KNOWLEDGE_BASE_DIR", "./knowledge_base_jhu")
 ).resolve()
 CHROMA_DB_PATH = os.getenv("CHROMA_DB_PATH", "./jhu_vectordb")
 CHROMA_COLLECTION_NAME = os.getenv("CHROMA_COLLECTION_NAME", "jhu_knowledge")
