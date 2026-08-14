@@ -14,6 +14,7 @@ import BlogPage from './pages/BlogPage.jsx';
 import BlogDetailPage from './pages/BlogDetailPage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
 import AdminDashboard from './pages/AdminDashboard.jsx';
+import ChatWidget from './components/ChatWidget.jsx';
 import { AdminProvider } from './context/AdminContext.jsx';
 
 function App() {
@@ -48,6 +49,7 @@ function App() {
           </Routes>
         </main>
         <Footer />
+        <ChatWidget />
       </div>
     </Router>
     </AdminProvider>
