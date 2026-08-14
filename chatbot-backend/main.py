@@ -5,21 +5,13 @@ FastAPI server for the Job Hunting U RAG chatbot.
 import os
 
 from dotenv import load_dotenv
-from fastapi import FastAPI, File, Form, HTTPException, UploadFile
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
-import airtable_client
 import rag
 
 load_dotenv()
-
-MAX_RESUME_SIZE_BYTES = 5 * 1024 * 1024  # 5 MB
-ALLOWED_RESUME_TYPES = {
-    "application/pdf",
-    "application/msword",
-    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-}
 
 app = FastAPI(title="Job Hunting U Chatbot API")
 
@@ -75,44 +67,3 @@ def chat(request: ChatRequest):
         )
 
     return ChatResponse(**result)
-
-
-@app.post("/api/chatbot/leads")
-async def submit_lead(
-    name: str = Form(...),
-    email: str = Form(...),
-    phone: str = Form(...),
-    question: str = Form(""),
-    resume: UploadFile | None = File(None),
-):
-    name = name.strip()
-    email = email.strip()
-    phone = phone.strip()
-
-    if not name or not email or not phone:
-        raise HTTPException(status_code=400, detail="name, email, and phone are required")
-    if "@" not in email:
-        raise HTTPException(status_code=400, detail="invalid email address")
-
-    try:
-        record_id = airtable_client.create_lead(name, email, phone, question)
-
-        if resume is not None and resume.filename:
-            resume_bytes = await resume.read()
-            if len(resume_bytes) > MAX_RESUME_SIZE_BYTES:
-                print(f"[leads] resume too large ({len(resume_bytes)} bytes) — skipped attachment")
-            elif resume.content_type not in ALLOWED_RESUME_TYPES:
-                print(f"[leads] unsupported resume type {resume.content_type} — skipped attachment")
-            else:
-                airtable_client.attach_resume(
-                    record_id, resume.filename, resume.content_type, resume_bytes
-                )
-
-        print(f"[leads] saved to Airtable: {name} <{email}> ({phone})")
-        return {"success": True}
-    except Exception as exc:
-        print(f"[leads] failed to save lead: {exc}")
-        raise HTTPException(
-            status_code=500,
-            detail="Something went wrong saving your info. Please try again.",
-        )

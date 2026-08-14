@@ -461,6 +461,44 @@ app.post('/api/contact', async (req, res) => {
       // We don't want to fail the whole request if Systeme.io sync fails
     }
 
+    // Integrate with Airtable
+    try {
+      const airtableApiKey = process.env.AIRTABLE_API_KEY;
+      const airtableBaseId = process.env.AIRTABLE_BASE_ID;
+      const airtableTableName = process.env.AIRTABLE_TABLE_NAME || 'Leads';
+
+      if (airtableApiKey && airtableBaseId) {
+        const airtableResponse = await fetch(
+          `https://api.airtable.com/v0/${airtableBaseId}/${encodeURIComponent(airtableTableName)}`,
+          {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${airtableApiKey}`,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              fields: {
+                Name: full_name,
+                Email: email,
+                Phone: phone || '',
+                'Questions Asked': message || ''
+              }
+            })
+          }
+        );
+
+        if (!airtableResponse.ok) {
+          const errorData = await airtableResponse.json();
+          console.error('Airtable API Error:', errorData);
+        } else {
+          console.log('Successfully synced to Airtable');
+        }
+      }
+    } catch (airtableErr) {
+      console.error('Failed to sync with Airtable:', airtableErr.message);
+      // We don't want to fail the whole request if Airtable sync fails
+    }
+
     res.json({
       success: true,
       id: result.insertId
