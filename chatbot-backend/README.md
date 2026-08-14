@@ -10,7 +10,8 @@ The chat UI itself lives in the main site's React app
 (`frontend/src/components/ChatWidget.jsx`), not in this folder — this
 service is API-only. Lead capture (name/email/phone/message) happens on
 the existing Contact Us page, which writes to the SQL database (source
-of truth) and syncs to Systeme.io and Airtable from `backend/server.js`.
+of truth) and syncs to Systeme.io from `backend/server.js`. (Syncing
+leads to Airtable as well is a deferred follow-up task, not yet wired up.)
 
 ```
 chatbot-backend/
@@ -129,4 +130,5 @@ No code changes are needed for routine content updates.
   leak to a website visitor.
 - There is no lead-capture endpoint in this service. All lead capture
   happens on the Contact Us page (`/contact`), which is the single
-  source of truth (SQL) and syncs to Systeme.io and Airtable.
+  source of truth (SQL) and syncs to Systeme.io. Syncing leads to
+  Airtable as well is a deferred follow-up, not yet implemented.
