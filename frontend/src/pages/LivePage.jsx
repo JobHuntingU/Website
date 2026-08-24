@@ -9,7 +9,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 
-const CHANNEL_ID = 'UCCskVLO1uO8yArKnrSRr6FA';
+const CHANNEL_ID = 'UCe-HMHHAbja-Z2LgV7PiRpQ';
 
 const EMBED_DOMAIN =
         typeof window !== 'undefined' ? window.location.hostname : 'jobhuntingu.com';
