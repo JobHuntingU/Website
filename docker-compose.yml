@@ -56,6 +56,27 @@ services:
       - "traefik.http.routers.jhu-backend.priority=100"
       - "traefik.http.services.jhu-backend.loadbalancer.server.port=3001"
 
+  chatbot-backend:
+    build:
+      context: ./chatbot-backend
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    ports:
+      - "8000:8000" # For local testing: http://localhost:8000
+    networks:
+      - jhu-network
+    expose:
+      - "8000"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.jhu-chatbot.rule=(Host(`jobhuntingu.com`) || Host(`www.jobhuntingu.com`)) && PathPrefix(`/api/chatbot`)"
+      - "traefik.http.routers.jhu-chatbot.entrypoints=websecure"
+      - "traefik.http.routers.jhu-chatbot.tls=true"
+      - "traefik.http.routers.jhu-chatbot.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.jhu-chatbot.priority=200"
+      - "traefik.http.services.jhu-chatbot.loadbalancer.server.port=8000"
+
 volumes:
   db_data:
 
