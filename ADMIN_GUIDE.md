@@ -64,3 +64,10 @@ The website uses "Content Keys" to manage text without redeploying code. To chan
    - **Booked**: Call scheduled.
    - **Closed**: Conversion successful.
    - **Junk**: Spam.
+
+---
+
+## 📊 Website Statistics
+To track how many people are visiting the site and how they are using it, we use the following tools:
+- **Microsoft Clarity**: Watch session recordings and see where users click. [Login here](https://clarity.microsoft.com/)
+- **Google Search Console**: See what people are searching for to find JobHuntingU. [Login here](https://search.google.com/search-console)

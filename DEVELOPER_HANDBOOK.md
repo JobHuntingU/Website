@@ -88,6 +88,10 @@ If you change the DB schema, add a new script in `backend/scripts/` and run it v
 - The website uses **Google Jobs SEO** (JSON-LD) for career postings.
 - Sitemap and Robots.txt are located in `frontend/public/`.
 
+### Analytics & Monitoring
+- **Microsoft Clarity**: Used for session recordings and heatmaps. [Access Clarity](https://clarity.microsoft.com/)
+- **Google Search Console**: Used for tracking search performance and indexing status. [Access Search Console](https://search.google.com/search-console)
+
 ---
 
 ## 📂 Project Structure
