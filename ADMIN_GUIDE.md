@@ -9,9 +9,11 @@ This guide explains how to manage website content and leads through the Admin Da
 ---
 
 ## 📝 How to Update Website Content
-The website uses "Content Keys." To change text, find the corresponding key in the table below and update its **Value** in the "Page Content" section of the dashboard.
 
-### 🏠 Homepage Content
+### 1. Page Content (Text Overrides)
+The website uses "Content Keys" to manage text without redeploying code. To change text, find the corresponding key in the table below and update its **Value** in the "Page Content" tab.
+
+#### 🏠 Homepage Content
 | Page Name | Section | Key | Default Text / Purpose |
 | :--- | :--- | :--- | :--- |
 | `home` | `hero` | `hero_title` | "Stop applying blindly." |
@@ -21,51 +23,44 @@ The website uses "Content Keys." To change text, find the corresponding key in t
 | `home` | `problem` | `problem_p1` | First paragraph of the problem section. |
 | `home` | `problem` | `problem_p2` | Second paragraph of the problem section. |
 
-### ℹ️ About Page Content
+#### ℹ️ About Page Content
 | Page Name | Section | Key | Default Text / Purpose |
 | :--- | :--- | :--- | :--- |
 | `about` | `hero` | `hero_title` | "You shouldn't have to job hunt alone." |
 | `about` | `hero` | `hero_description` | The summary paragraph on the about page. |
 
-### 💼 Services Page Content
-| Page Name | Section | Key | Default Text / Purpose |
-| :--- | :--- | :--- | :--- |
-| `services` | `tier` | `community_title` | "The Community Hub" |
-| `services` | `tier` | `community_subtitle` | "Coming June 27th!" |
-| `services` | `tier` | `community_description` | Description for the Hub. |
-| `services` | `tier` | `mastermind_title` | "The Mastermind" |
-| `services` | `tier` | `mastermind_subtitle` | "Done With You" |
-| `services` | `tier` | `mastermind_description` | Description for the Mastermind. |
-| `services` | `tier` | `vip_title` | "The VIP Tier" |
-| `services` | `tier` | `vip_subtitle` | "Done For You" |
-| `services` | `tier` | `vip_description` | Description for the VIP Tier. |
+---
 
-### 📞 Contact Page Content
-| Page Name | Section | Key | Default Text / Purpose |
-| :--- | :--- | :--- | :--- |
-| `contact` | `info` | `contact_email` | `jerry@jobhuntingu.com` |
-| `contact` | `info` | `contact_phone` | `+1 (647) 202-8777` |
-| `contact` | `info` | `contact_location` | `319 W Hastings St Vancouver, BC, Canada` |
+### 2. Careers (Job Postings)
+1. Go to the **Careers** tab.
+2. Fill out the "Post a New Job" form.
+3. **Note on SEO**: The "Job Title" and "Description" are used by Google Jobs. Ensure they are clear for better visibility.
+4. Click **Post Job**. It will appear immediately on the `/careers` page.
+
+### 3. Blog Manager (Insights)
+1. Go to the **Blog Manager** tab.
+2. **Title**: The system automatically generates a URL-friendly "slug" from your title.
+3. **Excerpt**: A short summary (2-3 sentences) shown on the main blog list.
+4. **Content**: Supports Markdown/HTML for rich text.
+5. **Image URL**: Use a high-quality Unsplash link or a hosted image link.
 
 ---
 
 ## 🚀 Step-by-Step Instructions
 1. **Login** to the Admin Dashboard.
-2. Scroll to the **Page Content** section.
-3. To change existing text: Click **Edit** next to the key.
-4. To add a new override: Click **Add New Key** and fill in the Page, Section, and Key from the table above.
-5. Enter your new text in the **Value** box.
-6. Click **Save Changes**.
-7. Refresh the website to see your changes live!
+2. Select the appropriate **Tab** for what you want to change.
+3. To change existing text (Page Content): Click **Edit** next to the key, change the value, and click **Save**.
+4. To remove a job or blog: Click the **Delete/Remove** button in its respective table.
+5. Refresh the website to see your changes live!
 
 ---
 
 ## 📈 Managing Leads
-1. Look at the **Recent Leads** table in the dashboard.
+1. Look at the **Leads** table in the dashboard.
 2. Every time someone fills out the contact form, they appear here.
-3. Use the dropdown in the **Status** column to track your progress with each lead:
-   - **New**: Fresh lead, hasn't been touched yet.
-   - **Contacted**: You've reached out to them.
-   - **Booked**: The discovery call is scheduled.
-   - **Closed**: They've joined a program or the process is finished.
-   - **Junk**: Spam or unrelated messages.
+3. Use the dropdown in the **Status** column to track your progress:
+   - **New**: Fresh lead.
+   - **Contacted**: You've reached out.
+   - **Booked**: Call scheduled.
+   - **Closed**: Conversion successful.
+   - **Junk**: Spam.
