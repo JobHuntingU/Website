@@ -251,9 +251,14 @@ const HomePage = () => {
                     <div className="mt-auto">
                       <Button asChild variant="outline" className="w-full">
                         <Link to="/contact">
-                          Book a Discovery Call <ArrowRight className="ml-2 h-4 w-4" />
+                          {service.featured ? 'Apply for a Strategy Call' : 'Book a Discovery Call'} <ArrowRight className="ml-2 h-4 w-4" />
                         </Link>
                       </Button>
+                      {service.featured && (
+                        <p className="text-xs text-muted-foreground mt-2">
+                          (Note: We strictly cap our VIP clients to ensure an incredibly high success rate. Let's talk to see if you're a fit.)
+                        </p>
+                      )}
                     </div>
                   </div>
                 </motion.div>

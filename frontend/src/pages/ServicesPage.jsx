@@ -59,7 +59,7 @@ const ServicesPage = () => {
       themeClass: 'card-vip',
       badgeClass: 'badge-vip',
       price: '$3,500',
-      buttonText: 'Book a Discovery Call',
+      buttonText: 'Apply for a Strategy Call',
       buttonVariant: 'default',
       hoverEffect: 'hover:-translate-y-2 hover:shadow-2xl scale-100 lg:scale-105 z-10'
     }
@@ -97,7 +97,7 @@ const ServicesPage = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            Choose the pathway that fits your goals. From collaborative training to white-glove automation, we have the ecosystem to get you hired.
+            The modern job hunt requires fighting fire with fire. Choose your pathway to access the Hidden Job Market and secure your next high-paying role.
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -193,6 +193,11 @@ const ServicesPage = () => {
                       >
                         <Link to="/contact">{service.buttonText}</Link>
                       </Button>
+                      {service.featured && (
+                        <p className="text-sm text-muted-foreground mt-2">
+                          (Note: We strictly cap our VIP clients to ensure an incredibly high success rate. Let's talk to see if you're a fit.)
+                        </p>
+                      )}
                     </div>
                   </div>
                 </motion.div>

@@ -84,7 +84,7 @@ const ContactPage = () => {
       // Silently succeed to avoid alerting the bot
       toast({
         title: "Request Submitted!",
-        description: "We'll be in touch shortly to schedule your discovery call.",
+        description: "We'll be in touch shortly to schedule your strategy call.",
       });
       setFormData({
         fullName: '',
@@ -123,7 +123,7 @@ const ContactPage = () => {
       
       toast({
         title: "Request Submitted!",
-        description: "We'll be in touch shortly to schedule your discovery call.",
+        description: "We'll be in touch shortly to schedule your strategy call.",
       });
       
       setFormData({
@@ -150,16 +150,16 @@ const ContactPage = () => {
 
   const faqs = [
     {
-      question: "What happens during a discovery call?",
-      answer: "During our 30-minute discovery call, we'll discuss your current career situation, your goals, and the challenges you're facing. We'll then outline how our ecosystem can specifically help you and determine which tier is the best fit."
+      question: "What happens during a strategy call?",
+      answer: "During our 30-minute strategy call, we'll discuss your current career situation, your goals, and the challenges you're facing. We'll then outline how our ecosystem can specifically help you and determine which tier is the best fit."
     },
     {
-      question: "How long is a discovery call?",
-      answer: "Discovery calls are typically scheduled for 30 minutes. This gives us enough time to understand your needs without taking up too much of your day."
+      question: "How long is a strategy call?",
+      answer: "Strategy calls are typically scheduled for 30 minutes. This gives us enough time to understand your needs without taking up too much of your day."
     },
     {
-      question: "Is there a cost for a discovery call?",
-      answer: "No, discovery calls are completely free and carry no obligation. They are simply an opportunity for us to see if we're a good fit for each other."
+      question: "Is there a cost for a strategy call?",
+      answer: "No, strategy calls are completely free and carry no obligation. They are simply an opportunity for us to see if we're a good fit for each other."
     },
     {
       question: "What should I prepare for the call?",
@@ -174,8 +174,8 @@ const ContactPage = () => {
   return (
     <>
       <Helmet>
-        <title>{`Contact Us - Book a Discovery Call | JobHuntingU`}</title>
-        <meta name="description" content="Book a free discovery call with JobHuntingU to explore how our AI-powered strategies and community can help you land your dream role." />
+        <title>{`Contact Us - Apply for a Strategy Call | JobHuntingU`}</title>
+        <meta name="description" content="Apply for a free strategy call with JobHuntingU to explore how our AI-powered strategies and community can help you land your dream role." />
       </Helmet>
 
       {/* Hero Section */}
@@ -200,7 +200,7 @@ const ContactPage = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            Book a free discovery call with our team to explore how JobHuntingU can help you land your dream role.
+            Apply for a free strategy call with our team to explore how JobHuntingU can help you land your dream role.
           </motion.p>
         </div>
       </section>
@@ -218,7 +218,7 @@ const ContactPage = () => {
               transition={{ duration: 0.5, delay: 0.3 }}
             >
               <div className="bg-card text-card-foreground rounded-2xl shadow-lg p-6 md:p-8 border">
-                <h2 className="text-2xl font-bold mb-6">Request a Discovery Call</h2>
+                <h2 className="text-2xl font-bold mb-6">Request a Strategy Call</h2>
                 
                 <form onSubmit={handleSubmit} className="space-y-6">
                   {/* Honeypot field - hidden from users */}
@@ -346,7 +346,7 @@ const ContactPage = () => {
                     <div className="space-y-2 mb-4">
                       <Label className="block text-base font-semibold text-primary">Complete Your Booking</Label>
                       <p className="text-sm text-muted-foreground">
-                        To ensure we're fully prepared for your discovery call, please <span className="font-bold text-foreground">complete the form above</span> and <span className="font-bold text-foreground">select a time</span> on the calendar below. Once both are finished, click the button below to submit your request.
+                        To ensure we're fully prepared for your strategy call, please <span className="font-bold text-foreground">complete the form above</span> and <span className="font-bold text-foreground">select a time</span> on the calendar below. Once both are finished, click the button below to submit your request.
                       </p>
                     </div>
                     <div className="bg-card rounded-xl overflow-hidden border">
@@ -372,7 +372,7 @@ const ContactPage = () => {
                         Submitting Request...
                       </>
                     ) : (
-                      "Request Discovery Call"
+                      "Request Strategy Call"
                     )}
                   </Button>
                 </form>
