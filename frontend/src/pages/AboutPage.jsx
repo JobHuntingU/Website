@@ -25,31 +25,31 @@ const AboutPage = () => {
 
   const testimonials = [
     {
-      name: 'Maya Chen',
-      role: 'Product Manager at Shopify',
-      quote: 'JobHuntingU transformed my job search from a lonely grind into an empowering journey. The AI strategies cut my application time in half, and the community kept me motivated through every rejection.',
-      avatar: 'MC',
+      name: 'Summer Patoine',
+      role: 'Product Manager at EA Sports',
+      quote: `Before working with JHU, my job search was just me submitting applications into a void and hoping something stuck. Jerry and the team helped me build a system that got me directly in front of VP-level decision-makers instead of an algorithm. Their approach cut my application time in half and, more importantly, actually worked. I landed my dream PM role at EA Sports without a single 'let's grab a virtual coffee' email.`,
+      avatar: 'SP',
       color: 'bg-primary'
     },
     {
-      name: 'Raj Patel',
-      role: 'Senior Developer at Amazon',
-      quote: 'After 6 months of searching alone, I joined the VIP tier and landed 3 offers in 8 weeks. The personalized approach and automated outreach were game-changers.',
-      avatar: 'RP',
+      name: 'Amit Hassan',
+      role: 'Marketing Director at KingsGate Luxury Homes',
+      quote: `I was burnt out from the usual networking advice that goes nowhere. The Mastermind program taught me how to actually reach and engage executives the right way, instead of cold-emailing into silence. Jerry and the team clearly care about outcomes, not just activity but their outreach approach helped me skip the HR queue entirely and land a Director role at KingsGate.`,
+      avatar: 'AH',
       color: 'bg-secondary'
     },
     {
-      name: 'Lucia Torres',
-      role: 'Marketing Director at Lululemon',
-      quote: 'The Mastermind program gave me the tools and confidence I needed. Jerry and the team genuinely care about your success, not just another sale.',
-      avatar: 'LT',
+      name: 'Alexander Rudak',
+      role: 'Data Analyst at Microsoft',
+      quote: `I went in skeptical about using AI for a job search, but JHU's framework changed my mind fast. It's not just automated applications, it's a genuinely data-driven approach. Having my pipeline tracked in one dashboard gave me real visibility into what was working. My interview rate tripled, and I finally had a system for standing out instead of guessing, which is how I closed a great offer at Microsoft.`,
+      avatar: 'AR',
       color: 'bg-accent-foreground'
     },
     {
-      name: 'Kwame Asante',
-      role: 'Data Analyst at Microsoft',
-      quote: 'I was skeptical about AI in job searching, but the results speak for themselves. My interview rate tripled, and I finally understood how to stand out in a crowded market.',
-      avatar: 'KA',
+      name: 'Shashank Jeripothula',
+      role: 'Senior Developer at Clio',
+      quote: `After six months of searching on my own with little to show for it, I knew I needed a different approach. Joining VIP was the best investment I made in this process. The team essentially became my personal career agency. They handled the applications, ran targeted email campaigns, and did the outreach to hiring managers while I kept my head down at my day job. I wouldn't have landed my senior role at Clio without their system.`,
+      avatar: 'SJ',
       color: 'bg-primary'
     }
   ];

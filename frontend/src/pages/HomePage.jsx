@@ -37,7 +37,7 @@ const HomePage = () => {
       title: 'The Mastermind',
       subtitle: 'Done With You',
       price: '$1,500',
-      description: 'Collaborative training where we teach you cutting-edge AI tools for your job search.',
+      description: 'Master the Hidden Job Market. Stop applying into the void. We work alongside you to build a personalized job-hunting "Machine" that fights fire with fire.',
       themeClass: 'card-mastermind',
       badgeClass: 'badge-mastermind',
     },
@@ -47,7 +47,7 @@ const HomePage = () => {
       title: 'The VIP Tier',
       subtitle: 'Done For You',
       price: '$3,500',
-      description: 'Our premium white-glove service. We build and manage your automated backend systems.',
+      description: 'Your personal white-glove agency. Don\'t have 40 hours a week to job hunt? We build and run the Machine for you. You just sit back with a cup of coffee, review your dashboard, and show up to the interviews.',
       featured: true,
       themeClass: 'card-vip',
       badgeClass: 'badge-vip',
@@ -56,25 +56,25 @@ const HomePage = () => {
 
   const testimonials = [
     {
-      name: 'Maya Chen',
-      role: 'Product Manager',
+      name: 'Summer Patoine',
+      role: 'Product Manager at EA Sports',
       quote:
-        'I went from months of silence to multiple interviews within weeks. The system actually works.',
-      avatar: 'MC',
+        'I applied for months and heard nothing back. JHU showed me how to skip the ATS completely. I went from total silence to multiple interviews in under two weeks.',
+      avatar: 'SP',
     },
     {
-      name: 'Raj Patel',
-      role: 'Software Engineer',
+      name: 'Amit Hassan',
+      role: 'Marketing Director at KingsGate Luxury Homes',
       quote:
-        'The VIP automation completely changed my job search. I stopped guessing and started getting interviews.',
-      avatar: 'RP',
+        'JHU didn\'t just give me tips. It gave me a real system for my job search. I finally understood how to reach the roles that never get posted.',
+      avatar: 'AH',
     },
     {
-      name: 'Lucia Torres',
-      role: 'Marketing Lead',
+      name: 'Shashank Jeripothula',
+      role: 'Senior Developer at Clio',
       quote:
-        'Structured, practical, and motivating. It feels like having a job search operating system.',
-      avatar: 'LT',
+        'I didn\'t have 40 hours a week to spend job hunting, so I handed it to the JHU VIP team. They ran my outreach, I kept working my day job and got 3 offers in 8 weeks!',
+      avatar: 'SJ',
     },
   ];
 

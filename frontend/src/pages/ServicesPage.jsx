@@ -28,17 +28,16 @@ const ServicesPage = () => {
       icon: Users,
       title: getContent('mastermind_title', 'The Mastermind'),
       subtitle: getContent('mastermind_subtitle', 'Done With You'),
-      description: getContent('mastermind_description', 'We teach you how to fish in a high-energy, collaborative environment. Meeting multiple times a week, we show you exactly how to leverage modern AI tools to analyze and tailor your resume for specific roles, identify and connect with key stakeholders, and ultimately ace the interview.'),
+      description: getContent('mastermind_description', 'Master the Hidden Job Market. Stop applying into the void. We work alongside you to build a personalized job-hunting "Machine" that fights fire with fire.'),
       features: [
-        'Multiple weekly meetings',
-        'AI-powered resume optimization',
-        'Stakeholder connection strategy',
-        'Interview preparation'
+        'Bypass the ATS: Learn to find and court the actual decision-makers so you aren\'t dealing with HR gatekeepers.',
+        'The 11/10 Application: Master our exact AI and keyword workflows to ensure you rank at the top of the pile.',
+        'Advanced Networking: Learn the "Law of Reciprocity" and use LinkedIn voice/video to land interviews without begging for favors.'
       ],
       themeClass: 'card-mastermind',
       badgeClass: 'badge-mastermind',
       price: '$1,500',
-      buttonText: 'Book a Discovery Call',
+      buttonText: 'Apply for a Strategy Call',
       buttonVariant: 'outline',
       hoverEffect: 'hover:-translate-y-2 hover:shadow-xl'
     },
@@ -47,13 +46,11 @@ const ServicesPage = () => {
       icon: Sparkles,
       title: getContent('vip_title', 'The VIP Tier'),
       subtitle: getContent('vip_subtitle', 'Done For You'),
-      description: getContent('vip_description', 'This is our white-glove service. We take over the heavy lifting of the full job search cycle. While you focus on interview prep, our sophisticated, automated backend systems handle the rigorous work of processing job descriptions, sourcing roles, applying, and executing follow-ups. We run the pipeline; you take the interviews.'),
+      description: getContent('vip_description', 'Your personal white-glove agency. Don\'t have 40 hours a week to job hunt? We build and run the Machine for you. You just sit back with a cup of coffee, review your dashboard, and show up to the interviews.'),
       features: [
-        'Full job search automation',
-        'Sophisticated backend systems',
-        'Job description processing',
-        'Automated follow-ups',
-        'You focus on interviews'
+        'We do the grunt work: Our account managers manually tailor your resume (15-20 keywords) and apply to high-tier roles within 72 hours of posting.',
+        'Targeted Outreach: We build custom email marketing campaigns to court hiring managers on your behalf.',
+        'Total Management: We track every metric, handle the follow-ups, and negotiate so you don\'t sell your time at a discount.'
       ],
       featured: true,
       themeClass: 'card-vip',
