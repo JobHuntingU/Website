@@ -251,7 +251,7 @@ const HomePage = () => {
                     <div className="mt-auto">
                       <Button asChild variant="outline" className="w-full">
                         <Link to="/contact">
-                          {service.featured ? 'Apply for a Strategy Call' : 'Book a Strategy Call'} <ArrowRight className="ml-2 h-4 w-4" />
+                          {service.featured ? 'Apply for a Strategy Call' : 'Apply for a Strategy Call'} <ArrowRight className="ml-2 h-4 w-4" />
                         </Link>
                       </Button>
                       {service.featured && (
