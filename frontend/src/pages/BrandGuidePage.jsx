@@ -2,9 +2,47 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import { Copy, Download } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import logo from '@/assets/Logo_1.svg';
+
+const logoDownloads = [
+	{ title: 'Transparent PNG', variant: 'transparent', note: 'For presentations and design files' },
+	{ title: 'One-colour black', variant: 'black', note: 'For print and single-colour applications' },
+	{ title: 'One-colour white', variant: 'white', note: 'For dark backgrounds' },
+];
+
+const downloadLogoPng = async (variant) => {
+	const svgText = await fetch(logo).then((response) => response.text());
+	const svg =
+		variant === 'black'
+			? svgText.replace(/fill="#469bd1"/gi, 'fill="#000000"')
+			: variant === 'white'
+				? svgText.replace(/fill="#469bd1"/gi, 'fill="#FFFFFF"')
+				: svgText;
+
+	const blob = new Blob([svg], { type: 'image/svg+xml;charset=utf-8' });
+	const url = URL.createObjectURL(blob);
+	const img = new Image();
+	img.onload = () => {
+		const canvas = document.createElement('canvas');
+		canvas.width = 2000;
+		canvas.height = 500;
+		const context = canvas.getContext('2d');
+		context.clearRect(0, 0, canvas.width, canvas.height);
+		context.drawImage(img, 0, 0, canvas.width, canvas.height);
+		canvas.toBlob((pngBlob) => {
+			if (!pngBlob) return;
+			const pngUrl = URL.createObjectURL(pngBlob);
+			const link = document.createElement('a');
+			link.href = pngUrl;
+			link.download = `jhu-logo-${variant === 'transparent' ? 'transparent' : `one-color-${variant}`}.png`;
+			link.click();
+			URL.revokeObjectURL(pngUrl);
+			URL.revokeObjectURL(url);
+		}, 'image/png');
+	};
+	img.src = url;
+};
 
 const palette = [
 	{
@@ -28,13 +66,6 @@ const palette = [
 		usage: 'Off-White is for subtle backgrounds, framing, and supporting surfaces.',
 		accent: 'bg-[#FAFAF9] text-black',
 	},
-];
-
-const logoDownloads = [
-	{ title: 'Primary SVG', href: logo, note: 'Source vector artwork' },
-	{ title: 'Transparent PNG', href: '/jhu-logo-transparent.png', note: 'For presentations and design files' },
-	{ title: 'One-colour black', href: '/jhu-logo-one-color-black.png', note: 'For print and single-colour applications' },
-	{ title: 'One-colour white', href: '/jhu-logo-one-color-white.png', note: 'For dark backgrounds' },
 ];
 
 const copyHex = async (event) => {
@@ -108,11 +139,7 @@ const BrandGuidePage = () => {
 						<motion.div {...fadeInUp} className="grid gap-6 lg:grid-cols-[1.1fr_1.2fr]">
 							<Card className="overflow-hidden border border-border bg-card/80 shadow-brand">
 								<div className="flex min-h-[260px] items-center justify-center bg-[#FAFAF9] p-8">
-									<img
-										src={logo}
-										alt="JobHuntingU logo"
-										className="h-24 w-auto max-w-full sm:h-28"
-									/>
+									<img src={logo} alt="JobHuntingU logo" className="h-24 w-auto max-w-full sm:h-28" />
 								</div>
 							</Card>
 
@@ -141,7 +168,7 @@ const BrandGuidePage = () => {
 							</h2>
 						</motion.div>
 
-						<div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+						<div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
 							{logoDownloads.map((item) => (
 								<Card key={item.title} className="border border-border bg-card shadow-brand">
 									<CardContent className="p-5">
@@ -152,27 +179,17 @@ const BrandGuidePage = () => {
 											<Download className="h-4 w-4 text-muted-foreground" />
 										</div>
 										<div className="mb-3 flex min-h-[120px] items-center justify-center rounded-xl border border-border bg-[#FAFAF9] p-4">
-											<img
-												src={item.href === logo ? logo : item.href}
-												alt={item.title}
-												className="max-h-[74px] w-auto max-w-full"
-											/>
+											<img src={logo} alt={item.title} className="max-h-[74px] w-auto max-w-full" />
 										</div>
-										<p className="mb-2 text-lg font-semibold text-foreground">
-											{item.title}
-										</p>
-										<p className="text-sm text-muted-foreground">
-											{item.note}
-										</p>
-										<a
-											href={item.href}
-											target={item.href.startsWith('http') ? '_blank' : undefined}
-											rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-											download
+										<p className="mb-2 text-lg font-semibold text-foreground">{item.title}</p>
+										<p className="text-sm text-muted-foreground">{item.note}</p>
+										<button
+											type="button"
+											onClick={() => downloadLogoPng(item.variant)}
 											className="mt-4 inline-flex items-center text-sm font-semibold text-[#5D99CC] hover:underline"
 										>
-											Download file
-										</a>
+											Download PNG
+										</button>
 									</CardContent>
 								</Card>
 							))}
@@ -198,31 +215,10 @@ const BrandGuidePage = () => {
 								</CardHeader>
 								<CardContent>
 									<ul className="space-y-3 text-muted-foreground">
-										<li className="flex gap-3">
-											<span className="mt-1 text-[#5D99CC] text-lg">•</span>
-											<span>
-												Use the logo on website headers, social graphics, proposals, and
-												marketing materials.
-											</span>
-										</li>
-										<li className="flex gap-3">
-											<span className="mt-1 text-[#5D99CC] text-lg">•</span>
-											<span>
-												Use the full-colour version on white or off-white backgrounds.
-											</span>
-										</li>
-										<li className="flex gap-3">
-											<span className="mt-1 text-[#5D99CC] text-lg">•</span>
-											<span>
-												Keep a clear space area equal to half the height of the “U” on every side.
-											</span>
-										</li>
-										<li className="flex gap-3">
-											<span className="mt-1 text-[#5D99CC] text-lg">•</span>
-											<span>
-												Minimum size: 120 px wide on screen or 25 mm wide in print.
-											</span>
-										</li>
+										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Use the logo on website headers, social graphics, proposals, and marketing materials.</span></li>
+										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Use the full-colour version on white or off-white backgrounds.</span></li>
+										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Clear space: keep at least half the height of the “U” around the mark on all sides.</span></li>
+										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Minimum size: 120 px wide on screen or 25 mm wide in print.</span></li>
 									</ul>
 								</CardContent>
 							</Card>
@@ -233,28 +229,10 @@ const BrandGuidePage = () => {
 								</CardHeader>
 								<CardContent>
 									<ul className="space-y-3 text-muted-foreground">
-										<li className="flex gap-3">
-											<span className="mt-1 text-[#5D99CC] text-lg">•</span>
-											<span>Do not stretch, distort, rotate, flip, or crop the logo.</span>
-										</li>
-										<li className="flex gap-3">
-											<span className="mt-1 text-[#5D99CC] text-lg">•</span>
-											<span>
-												Do not change the colour balance or swap the blue accent.
-											</span>
-										</li>
-										<li className="flex gap-3">
-											<span className="mt-1 text-[#5D99CC] text-lg">•</span>
-											<span>
-												Do not reduce below the minimum size or place the mark inside insufficient clear space.
-											</span>
-										</li>
-										<li className="flex gap-3">
-											<span className="mt-1 text-[#5D99CC] text-lg">•</span>
-											<span>
-												Do not use the mark for unrelated materials or messaging that weakens the brand.
-											</span>
-										</li>
+										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Do not stretch, distort, rotate, flip, or crop the logo.</span></li>
+										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Do not change the colour balance or swap the blue accent.</span></li>
+										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Do not reduce below the minimum size or place the mark inside the required clear-space area.</span></li>
+										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Do not use the mark in a way that weakens the brand or makes the message harder to read.</span></li>
 									</ul>
 								</CardContent>
 							</Card>
@@ -302,18 +280,9 @@ const BrandGuidePage = () => {
 								</CardHeader>
 								<CardContent>
 									<ul className="space-y-3 text-muted-foreground">
-										<li className="flex gap-3">
-											<span className="mt-1 text-[#5D99CC] text-lg">•</span>
-											<span>Use bold, high-contrast layouts with strong weight and tight tracking.</span>
-										</li>
-										<li className="flex gap-3">
-											<span className="mt-1 text-[#5D99CC] text-lg">•</span>
-											<span>Keep headlines short, clear, and action-oriented.</span>
-										</li>
-										<li className="flex gap-3">
-											<span className="mt-1 text-[#5D99CC] text-lg">•</span>
-											<span>Use uppercase sparingly for emphasis and hierarchy.</span>
-										</li>
+										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Use bold, high-contrast layouts with strong weight and tight tracking.</span></li>
+										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Keep headlines short, clear, and action-oriented.</span></li>
+										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Use uppercase sparingly for emphasis and hierarchy.</span></li>
 									</ul>
 								</CardContent>
 							</Card>
@@ -324,18 +293,9 @@ const BrandGuidePage = () => {
 								</CardHeader>
 								<CardContent>
 									<ul className="space-y-3 text-muted-foreground">
-										<li className="flex gap-3">
-											<span className="mt-1 text-[#5D99CC] text-lg">•</span>
-											<span>Use a modern, high-clarity sans-serif feel with strong legibility.</span>
-										</li>
-										<li className="flex gap-3">
-											<span className="mt-1 text-[#5D99CC] text-lg">•</span>
-											<span>Prioritize readability over decorative styling.</span>
-										</li>
-										<li className="flex gap-3">
-											<span className="mt-1 text-[#5D99CC] text-lg">•</span>
-											<span>Keep line length comfortable and spacing generous enough to feel calm and clear.</span>
-										</li>
+										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Use strong contrast and readable rhythm to keep headlines and body copy clear.</span></li>
+										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Prioritize readability over decorative styling.</span></li>
+										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Keep line length comfortable and spacing generous enough to feel calm and clear.</span></li>
 									</ul>
 								</CardContent>
 							</Card>
@@ -380,9 +340,7 @@ const BrandGuidePage = () => {
 											<Copy className="h-3.5 w-3.5" />
 											HEX {color.hex}
 										</div>
-										<p className="text-sm leading-relaxed text-muted-foreground">
-											{color.usage}
-										</p>
+										<p className="text-sm leading-relaxed text-muted-foreground">{color.usage}</p>
 									</div>
 								</motion.button>
 							))}
@@ -395,33 +353,10 @@ const BrandGuidePage = () => {
 								</CardHeader>
 								<CardContent>
 									<ul className="space-y-3 text-muted-foreground">
-										<li className="flex gap-3">
-											<span className="mt-1 text-[#5D99CC] text-lg">•</span>
-											<span>
-												Use the full palette across the website, print collateral, and
-												social touchpoints.
-											</span>
-										</li>
-										<li className="flex gap-3">
-											<span className="mt-1 text-[#5D99CC] text-lg">•</span>
-											<span>
-												Use black for headlines, text, and the core mark to establish
-												contrast and authority.
-											</span>
-										</li>
-										<li className="flex gap-3">
-											<span className="mt-1 text-[#5D99CC] text-lg">•</span>
-											<span>
-												Use blue for links, CTAs, hover states, and small emphasis
-												details.
-											</span>
-										</li>
-										<li className="flex gap-3">
-											<span className="mt-1 text-[#5D99CC] text-lg">•</span>
-											<span>
-												Use off-white as the primary background to keep content crisp, calm, and premium.
-											</span>
-										</li>
+										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Use the full palette across the website, print collateral, and social touchpoints.</span></li>
+										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Use black for headlines, text, and the core mark to establish contrast and authority.</span></li>
+										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Use blue for links, CTAs, hover states, and small emphasis details.</span></li>
+										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Use off-white as the primary background to keep content crisp, calm, and premium.</span></li>
 									</ul>
 								</CardContent>
 							</Card>
@@ -432,33 +367,10 @@ const BrandGuidePage = () => {
 								</CardHeader>
 								<CardContent>
 									<ul className="space-y-3 text-muted-foreground">
-										<li className="flex gap-3">
-											<span className="mt-1 text-[#5D99CC] text-lg">•</span>
-											<span>
-												Do not introduce alternate shades, tints, or colour variations
-												outside the approved palette.
-											</span>
-										</li>
-										<li className="flex gap-3">
-											<span className="mt-1 text-[#5D99CC] text-lg">•</span>
-											<span>
-												Do not apply blue as a replacement for body text or black as a
-												background for reading.
-											</span>
-										</li>
-										<li className="flex gap-3">
-											<span className="mt-1 text-[#5D99CC] text-lg">•</span>
-											<span>
-												Do not swap the functional purpose of each colour in a way that weakens hierarchy.
-											</span>
-										</li>
-										<li className="flex gap-3">
-											<span className="mt-1 text-[#5D99CC] text-lg">•</span>
-											<span>
-												Do not use the palette in a way that reduces contrast or creates
-												inconsistency.
-											</span>
-										</li>
+										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Do not introduce alternate shades, tints, or colour variations outside the approved palette.</span></li>
+										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Do not apply blue as a replacement for body text or black as a background for reading.</span></li>
+										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Do not swap the functional purpose of each colour in a way that weakens hierarchy.</span></li>
+										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Do not use the palette in a way that reduces contrast or creates inconsistency.</span></li>
 									</ul>
 								</CardContent>
 							</Card>
