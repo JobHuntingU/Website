@@ -13,31 +13,28 @@ const logoDownloads = [
 
 const downloadLogoPng = async (variant) => {
 	try {
-		const svgSource = await fetch(logo).then((response) => response.text());
-		const svg =
-			variant === 'black'
-				? svgSource.replace(/fill="#469bd1"/gi, 'fill="#000000"')
-				: variant === 'white'
-					? svgSource.replace(/fill="#469bd1"/gi, 'fill="#FFFFFF"')
-					: svgSource;
-
-		const blob = new Blob([svg], { type: 'image/svg+xml;charset=utf-8' });
-		const objectUrl = URL.createObjectURL(blob);
 		const img = new Image();
-		img.crossOrigin = 'anonymous';
-
 		await new Promise((resolve, reject) => {
 			img.onload = resolve;
 			img.onerror = reject;
-			img.src = objectUrl;
+			img.src = logo;
 		});
 
 		const canvas = document.createElement('canvas');
-		canvas.width = 2000;
-		canvas.height = 500;
+		const targetWidth = 2000;
+		const aspectRatio = img.naturalWidth && img.naturalHeight ? img.naturalHeight / img.naturalWidth : 0.25;
+		canvas.width = targetWidth;
+		canvas.height = Math.round(targetWidth * aspectRatio);
+
 		const context = canvas.getContext('2d');
 		context.clearRect(0, 0, canvas.width, canvas.height);
 		context.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+		if (variant === 'black' || variant === 'white') {
+			context.globalCompositeOperation = 'source-in';
+			context.fillStyle = variant === 'black' ? '#000000' : '#FFFFFF';
+			context.fillRect(0, 0, canvas.width, canvas.height);
+		}
 
 		const pngBlob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/png'));
 		if (!pngBlob) {
@@ -47,13 +44,17 @@ const downloadLogoPng = async (variant) => {
 		const pngUrl = URL.createObjectURL(pngBlob);
 		const link = document.createElement('a');
 		link.href = pngUrl;
-		link.download = variant === 'transparent' ? 'jhu-logo-transparent.png' : variant === 'black' ? 'jhu-logo-one-color-black.png' : 'jhu-logo-one-color-white.png';
+		link.download =
+			variant === 'transparent'
+				? 'jhu-logo-transparent.png'
+				: variant === 'black'
+					? 'jhu-logo-one-color-black.png'
+					: 'jhu-logo-one-color-white.png';
 		document.body.appendChild(link);
 		link.click();
 		link.remove();
 
-		URL.revokeObjectURL(pngUrl);
-		URL.revokeObjectURL(objectUrl);
+		setTimeout(() => URL.revokeObjectURL(pngUrl), 2000);
 	} catch (error) {
 		console.error('Logo download failed:', error);
 	}
@@ -193,8 +194,24 @@ const BrandGuidePage = () => {
 											</div>
 											<Download className="h-4 w-4 text-muted-foreground" />
 										</div>
-										<div className="mb-3 flex min-h-[120px] items-center justify-center rounded-xl border border-border bg-[#FAFAF9] p-4">
-											<img src={logo} alt={item.title} className="max-h-[74px] w-auto max-w-full" />
+										<div
+											className={
+												item.variant === 'white'
+													? 'mb-3 flex min-h-[120px] items-center justify-center rounded-xl border border-border bg-black p-4'
+													: 'mb-3 flex min-h-[120px] items-center justify-center rounded-xl border border-border bg-[#FAFAF9] p-4'
+											}
+										>
+											<img
+												src={logo}
+												alt={item.title}
+												className={
+													item.variant === 'white'
+														? 'max-h-[74px] w-auto max-w-full brightness-0 invert'
+														: item.variant === 'black'
+															? 'max-h-[74px] w-auto max-w-full brightness-0'
+															: 'max-h-[74px] w-auto max-w-full'
+												}
+											/>
 										</div>
 										<p className="mb-2 text-lg font-semibold text-foreground">{item.title}</p>
 										<p className="text-sm text-muted-foreground">{item.note}</p>
