@@ -15,6 +15,7 @@ import BlogDetailPage from './pages/BlogDetailPage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
 import AdminDashboard from './pages/AdminDashboard.jsx';
 import ChatWidget from './components/ChatWidget.jsx';
+import BrandGuidePage from './pages/BrandGuidePage.jsx';
 import { AdminProvider } from './context/AdminContext.jsx';
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
               <Route path="/blog" element={<BlogPage />} />
               <Route path="/blog/:slug" element={<BlogDetailPage />} />
               <Route path="/live" element={<LivePage />} />
+              <Route path="/brand-guide" element={<BrandGuidePage />} />
               <Route path="/admin/login" element={<LoginPage />} />
               <Route path="/admin" element={<AdminDashboard />} />
               {/* Catch-all route for unknown paths */}
