@@ -1,7 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
-import { Copy } from 'lucide-react';
+import { Copy, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import logo from '@/assets/Logo_1.svg';
@@ -28,6 +28,13 @@ const palette = [
 		usage: 'Off-White is for subtle backgrounds, framing, and supporting surfaces.',
 		accent: 'bg-[#FAFAF9] text-black',
 	},
+];
+
+const logoDownloads = [
+	{ title: 'Primary SVG', href: logo, note: 'Source vector artwork' },
+	{ title: 'Transparent PNG', href: '/jhu-logo-transparent.png', note: 'For presentations and design files' },
+	{ title: 'One-colour black', href: '/jhu-logo-one-color-black.png', note: 'For print and single-colour applications' },
+	{ title: 'One-colour white', href: '/jhu-logo-one-color-white.png', note: 'For dark backgrounds' },
 ];
 
 const copyHex = async (event) => {
@@ -65,7 +72,7 @@ const BrandGuidePage = () => {
 				<title>Brand Guide | JobHuntingU</title>
 				<meta
 					name="description"
-					content="Brand guide for JobHuntingU including logo guidelines, brand personality, and approved color palette."
+					content="Brand guide for JobHuntingU covering logo usage, colour palette, typography, voice, and downloadable assets."
 				/>
 			</Helmet>
 
@@ -73,30 +80,16 @@ const BrandGuidePage = () => {
 				<section className="relative overflow-hidden bg-slate-900 text-white">
 					<div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(93,153,204,0.40),_transparent_45%)]" />
 					<div className="section-container relative z-10 py-24 md:py-28">
-						<motion.div {...fadeInUp} className="max-w-4xl mx-auto text-center">
+						<motion.div {...fadeInUp} className="mx-auto max-w-4xl text-center">
 							<p className="mb-4 text-sm font-bold uppercase tracking-[0.18em] text-primary">
 								Brand Guide
 							</p>
-							<h1 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-[-0.05em] leading-tight mb-6">
-								Direct, in motion, and outcome-first.
+							<h1 className="mb-6 text-4xl font-black leading-tight tracking-[-0.05em] md:text-5xl lg:text-6xl">
+								Clarity. Momentum. Results.
 							</h1>
-							<p className="mx-auto max-w-3xl text-lg md:text-xl text-white/80 leading-relaxed">
-								A simple visual system built to communicate momentum, clarity, and results
-								without losing the human edge of the JobHuntingU brand.
+							<p className="mx-auto max-w-3xl text-lg leading-relaxed text-white/80 md:text-xl">
+								JobHuntingU is built for people who need a clear next move, a practical plan, and a system that helps them get traction fast.
 							</p>
-							<div className="mt-8 flex flex-wrap justify-center gap-4">
-								<Button asChild size="lg">
-									<a href="#logo-guidelines">View Logo System</a>
-								</Button>
-								<Button
-									asChild
-									variant="outline"
-									size="lg"
-									className="border-white/30 bg-white/5 text-white hover:bg-white/10"
-								>
-									<a href="#colours">See Colour Policy</a>
-								</Button>
-							</div>
 						</motion.div>
 					</div>
 				</section>
@@ -107,40 +100,29 @@ const BrandGuidePage = () => {
 							<p className="mb-3 text-sm font-bold uppercase tracking-[0.15em] text-primary">
 								Logo Guidelines
 							</p>
-							<h2 className="text-3xl md:text-4xl font-bold tracking-[-0.04em]">
+							<h2 className="text-3xl font-bold tracking-[-0.04em] md:text-4xl">
 								The mark is built for motion and clarity.
 							</h2>
 						</motion.div>
 
-						<motion.div
-							{...fadeInUp}
-							className="grid gap-6 lg:grid-cols-[1.1fr_1.2fr]"
-						>
+						<motion.div {...fadeInUp} className="grid gap-6 lg:grid-cols-[1.1fr_1.2fr]">
 							<Card className="overflow-hidden border border-border bg-card/80 shadow-brand">
 								<div className="flex min-h-[260px] items-center justify-center bg-[#FAFAF9] p-8">
-									<div className="flex items-center justify-center">
-										<img
-											src={logo}
-											alt="JobHuntingU logo"
-											className="h-24 w-auto max-w-full sm:h-28"
-										/>
-									</div>
+									<img
+										src={logo}
+										alt="JobHuntingU logo"
+										className="h-24 w-auto max-w-full sm:h-28"
+									/>
 								</div>
 							</Card>
 
 							<Card className="border border-border bg-card/80 shadow-brand">
 								<CardContent className="space-y-5 p-6 md:p-8">
 									<p className="text-base leading-relaxed text-muted-foreground">
-										The Job Hunting U logo combines a black running figure facing right
-										with the bold condensed wordmark “JOB HUNTING.” The icon represents
-										momentum, action, and forward motion, while the wordmark delivers
-										clarity and authority. Only the “U” is set in blue to create a
-										memorable brand accent and signal the final, outcome-focused step in
-										the customer journey.
+										The Job Hunting U logo combines a black running figure facing right with the bold condensed wordmark “JOB HUNTING.” The icon represents momentum, action, and forward motion, while the wordmark delivers clarity and authority. Only the “U” is set in blue to create a memorable brand accent and signal the final, outcome-focused step in the customer journey.
 									</p>
 									<p className="text-base leading-relaxed text-muted-foreground">
-										Built for digital, print, and promotional use, the system stays
-										legible and strong across single-colour and full-colour applications.
+										The system is designed to stay legible across digital, print, and promotional assets while remaining strong in single-colour and full-colour use.
 									</p>
 								</CardContent>
 							</Card>
@@ -152,10 +134,60 @@ const BrandGuidePage = () => {
 					<div className="section-container">
 						<motion.div {...fadeInUp} className="mb-10">
 							<p className="mb-3 text-sm font-bold uppercase tracking-[0.15em] text-primary">
+								Logo Downloads
+							</p>
+							<h2 className="text-3xl font-bold tracking-[-0.04em] md:text-4xl">
+								Ready for designers and partners.
+							</h2>
+						</motion.div>
+
+						<div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+							{logoDownloads.map((item) => (
+								<Card key={item.title} className="border border-border bg-card shadow-brand">
+									<CardContent className="p-5">
+										<div className="mb-4 flex items-center justify-between">
+											<div className="rounded-full bg-[#5D99CC]/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-[#5D99CC]">
+												Download
+											</div>
+											<Download className="h-4 w-4 text-muted-foreground" />
+										</div>
+										<div className="mb-3 flex min-h-[120px] items-center justify-center rounded-xl border border-border bg-[#FAFAF9] p-4">
+											<img
+												src={item.href === logo ? logo : item.href}
+												alt={item.title}
+												className="max-h-[74px] w-auto max-w-full"
+											/>
+										</div>
+										<p className="mb-2 text-lg font-semibold text-foreground">
+											{item.title}
+										</p>
+										<p className="text-sm text-muted-foreground">
+											{item.note}
+										</p>
+										<a
+											href={item.href}
+											target={item.href.startsWith('http') ? '_blank' : undefined}
+											rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+											download
+											className="mt-4 inline-flex items-center text-sm font-semibold text-[#5D99CC] hover:underline"
+										>
+											Download file
+										</a>
+									</CardContent>
+								</Card>
+							))}
+						</div>
+					</div>
+				</section>
+
+				<section className="py-20 bg-muted/30">
+					<div className="section-container">
+						<motion.div {...fadeInUp} className="mb-10">
+							<p className="mb-3 text-sm font-bold uppercase tracking-[0.15em] text-primary">
 								Logo Policy
 							</p>
-							<h2 className="text-3xl md:text-4xl font-bold tracking-[-0.04em]">
-								Approved usage
+							<h2 className="text-3xl font-bold tracking-[-0.04em] md:text-4xl">
+								Clear rules, easy to enforce.
 							</h2>
 						</motion.div>
 
@@ -176,21 +208,19 @@ const BrandGuidePage = () => {
 										<li className="flex gap-3">
 											<span className="mt-1 text-[#5D99CC] text-lg">•</span>
 											<span>
-												Use the full-colour version for digital applications and clear
-												backgrounds.
+												Use the full-colour version on white or off-white backgrounds.
 											</span>
 										</li>
 										<li className="flex gap-3">
 											<span className="mt-1 text-[#5D99CC] text-lg">•</span>
 											<span>
-												Use the logo in black and blue on white or off-white backgrounds.
+												Keep a clear space area equal to half the height of the “U” on every side.
 											</span>
 										</li>
 										<li className="flex gap-3">
 											<span className="mt-1 text-[#5D99CC] text-lg">•</span>
 											<span>
-												Maintain clear space around the mark for readability and visual
-												impact.
+												Minimum size: 120 px wide on screen or 25 mm wide in print.
 											</span>
 										</li>
 									</ul>
@@ -216,15 +246,13 @@ const BrandGuidePage = () => {
 										<li className="flex gap-3">
 											<span className="mt-1 text-[#5D99CC] text-lg">•</span>
 											<span>
-												Do not reduce the logo below minimum size or place it on noisy
-												backgrounds.
+												Do not reduce below the minimum size or place the mark inside insufficient clear space.
 											</span>
 										</li>
 										<li className="flex gap-3">
 											<span className="mt-1 text-[#5D99CC] text-lg">•</span>
 											<span>
-												Do not use the mark for unrelated materials or inconsistent brand
-												messaging.
+												Do not use the mark for unrelated materials or messaging that weakens the brand.
 											</span>
 										</li>
 									</ul>
@@ -238,10 +266,10 @@ const BrandGuidePage = () => {
 					<div className="section-container">
 						<motion.div {...fadeInUp} className="mb-10">
 							<p className="mb-3 text-sm font-bold uppercase tracking-[0.15em] text-primary">
-								Brand Personality
+								Voice and Tone
 							</p>
-							<h2 className="text-3xl md:text-4xl font-bold tracking-[-0.04em]">
-								Direct, in motion, and outcome-first.
+							<h2 className="text-3xl font-bold tracking-[-0.04em] md:text-4xl">
+								Direct, practical, and outcome-first.
 							</h2>
 						</motion.div>
 
@@ -249,16 +277,69 @@ const BrandGuidePage = () => {
 							{...fadeInUp}
 							className="rounded-3xl border border-border bg-[linear-gradient(135deg,rgba(93,153,204,0.08),rgba(15,23,42,0.02))] p-6 md:p-8 shadow-brand"
 						>
-							<p className="text-base md:text-lg leading-relaxed text-muted-foreground max-w-5xl">
-								The Job Hunting U palette reflects a brand personality that is direct, in
-								motion, and outcome-first. The colour system is built to feel confident,
-								efficient, and action-oriented: black carries authority and clarity, the
-								blue adds momentum and trust, and the off-white creates space for focus
-								and calm. Together, these tones support a brand that moves quickly,
-								communicates clearly, and keeps the customer’s results at the centre of
-								every interaction.
+							<p className="max-w-5xl text-base leading-relaxed text-muted-foreground md:text-lg">
+								The brand should sound like a coach who knows the game and cuts through the noise. Clear, practical, and confident. No fluff. No vague promises. No jargon for its own sake. Every message should help someone make a better decision, take a smarter action, or move closer to the right role.
 							</p>
 						</motion.div>
+					</div>
+				</section>
+
+				<section className="py-20 bg-muted/30">
+					<div className="section-container">
+						<motion.div {...fadeInUp} className="mb-10">
+							<p className="mb-3 text-sm font-bold uppercase tracking-[0.15em] text-primary">
+								Typography
+							</p>
+							<h2 className="text-3xl font-bold tracking-[-0.04em] md:text-4xl">
+								Clean, high-contrast, and easy to read.
+							</h2>
+						</motion.div>
+
+						<div className="grid gap-6 lg:grid-cols-2">
+							<Card className="border border-border bg-card shadow-brand">
+								<CardHeader>
+									<CardTitle className="text-2xl">Headlines</CardTitle>
+								</CardHeader>
+								<CardContent>
+									<ul className="space-y-3 text-muted-foreground">
+										<li className="flex gap-3">
+											<span className="mt-1 text-[#5D99CC] text-lg">•</span>
+											<span>Use bold, high-contrast layouts with strong weight and tight tracking.</span>
+										</li>
+										<li className="flex gap-3">
+											<span className="mt-1 text-[#5D99CC] text-lg">•</span>
+											<span>Keep headlines short, clear, and action-oriented.</span>
+										</li>
+										<li className="flex gap-3">
+											<span className="mt-1 text-[#5D99CC] text-lg">•</span>
+											<span>Use uppercase sparingly for emphasis and hierarchy.</span>
+										</li>
+									</ul>
+								</CardContent>
+							</Card>
+
+							<Card className="border border-border bg-card shadow-brand">
+								<CardHeader>
+									<CardTitle className="text-2xl">Body Copy</CardTitle>
+								</CardHeader>
+								<CardContent>
+									<ul className="space-y-3 text-muted-foreground">
+										<li className="flex gap-3">
+											<span className="mt-1 text-[#5D99CC] text-lg">•</span>
+											<span>Use a modern, high-clarity sans-serif feel with strong legibility.</span>
+										</li>
+										<li className="flex gap-3">
+											<span className="mt-1 text-[#5D99CC] text-lg">•</span>
+											<span>Prioritize readability over decorative styling.</span>
+										</li>
+										<li className="flex gap-3">
+											<span className="mt-1 text-[#5D99CC] text-lg">•</span>
+											<span>Keep line length comfortable and spacing generous enough to feel calm and clear.</span>
+										</li>
+									</ul>
+								</CardContent>
+							</Card>
+						</div>
 					</div>
 				</section>
 
@@ -268,12 +349,12 @@ const BrandGuidePage = () => {
 							<p className="mb-3 text-sm font-bold uppercase tracking-[0.15em] text-primary">
 								Colours
 							</p>
-							<h2 className="text-3xl md:text-4xl font-bold tracking-[-0.04em]">
+							<h2 className="text-3xl font-bold tracking-[-0.04em] md:text-4xl">
 								Colour Policy
 							</h2>
 						</motion.div>
 
-						<div className="grid gap-6 md:grid-cols-3 mb-10">
+						<div className="mb-10 grid gap-6 md:grid-cols-3">
 							{palette.map((color) => (
 								<motion.button
 									key={color.hex}
@@ -288,10 +369,7 @@ const BrandGuidePage = () => {
 									<div className="flex min-h-[170px] flex-col justify-end p-4">
 										<div className="mb-4 flex items-center justify-between gap-2 text-[10px] font-bold uppercase tracking-[0.12em]">
 											<span>{color.name}</span>
-											<span
-												className="inline-flex items-center rounded-full border border-current/20 bg-black/5 px-2 py-1"
-												data-copy-status
-											>
+											<span className="inline-flex items-center rounded-full border border-current/20 bg-black/5 px-2 py-1" data-copy-status>
 												Copy
 											</span>
 										</div>
@@ -341,8 +419,7 @@ const BrandGuidePage = () => {
 										<li className="flex gap-3">
 											<span className="mt-1 text-[#5D99CC] text-lg">•</span>
 											<span>
-												Use off-white as the primary background to keep content crisp
-												and premium.
+												Use off-white as the primary background to keep content crisp, calm, and premium.
 											</span>
 										</li>
 									</ul>
@@ -372,8 +449,7 @@ const BrandGuidePage = () => {
 										<li className="flex gap-3">
 											<span className="mt-1 text-[#5D99CC] text-lg">•</span>
 											<span>
-												Do not swap the function of each colour in a way that weakens
-												hierarchy.
+												Do not swap the functional purpose of each colour in a way that weakens hierarchy.
 											</span>
 										</li>
 										<li className="flex gap-3">
@@ -389,15 +465,6 @@ const BrandGuidePage = () => {
 						</div>
 					</div>
 				</section>
-
-				<footer className="border-t border-border bg-background">
-					<div className="section-container py-8 text-center">
-						<p className="text-sm text-muted-foreground">
-							Draft for Jerry&apos;s approval. Logo files and any official font are still
-							to be confirmed.
-						</p>
-					</div>
-				</footer>
 			</main>
 		</>
 	);
