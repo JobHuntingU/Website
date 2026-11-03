@@ -1,9 +1,10 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
-import { Copy, Sparkles } from 'lucide-react';
+import { Copy } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import logo from '@/assets/Logo_1.svg';
 
 const palette = [
 	{
@@ -117,41 +118,12 @@ const BrandGuidePage = () => {
 						>
 							<Card className="overflow-hidden border border-border bg-card/80 shadow-brand">
 								<div className="flex min-h-[260px] items-center justify-center bg-[#FAFAF9] p-8">
-									<div className="flex items-center gap-4 sm:gap-6">
-										<svg
-											className="h-24 w-24 sm:h-28 sm:w-28"
-											viewBox="0 0 120 120"
-											xmlns="http://www.w3.org/2000/svg"
-											aria-label="Job Hunting U runner logo"
-										>
-											<g
-												fill="none"
-												stroke="#000000"
-												strokeWidth="7"
-												strokeLinecap="round"
-												strokeLinejoin="round"
-											>
-												<path d="M54 77 L39 56 L21 62 L38 81 L50 95 L69 84 L80 73" />
-												<path d="M48 38 L60 54 L79 49 L67 72" />
-												<path d="M68 31 L75 17 L92 26 L82 39" />
-												<path d="M39 56 L24 37 L34 22" />
-												<circle cx="31" cy="18" r="7" fill="#000000" stroke="none" />
-												<circle cx="69" cy="18" r="7" fill="#000000" stroke="none" />
-												<path d="M42 77 L74 106" />
-											</g>
-										</svg>
-
-										<div
-											className="font-black uppercase leading-none tracking-[0.08em] text-black"
-											style={{
-												fontFamily: 'Arial Narrow, Impact, sans-serif',
-												fontSize: 'clamp(2rem, 4vw, 3.5rem)',
-											}}
-										>
-											<div>JOB</div>
-											<div>HUNTING</div>
-											<div className="text-[#5D99CC]">U</div>
-										</div>
+									<div className="flex items-center justify-center">
+										<img
+											src={logo}
+											alt="JobHuntingU logo"
+											className="h-24 w-auto max-w-full sm:h-28"
+										/>
 									</div>
 								</div>
 							</Card>
