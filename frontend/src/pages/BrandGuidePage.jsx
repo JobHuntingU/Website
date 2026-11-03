@@ -12,36 +12,51 @@ const logoDownloads = [
 ];
 
 const downloadLogoPng = async (variant) => {
-	const svgText = await fetch(logo).then((response) => response.text());
-	const svg =
-		variant === 'black'
-			? svgText.replace(/fill="#469bd1"/gi, 'fill="#000000"')
-			: variant === 'white'
-				? svgText.replace(/fill="#469bd1"/gi, 'fill="#FFFFFF"')
-				: svgText;
+	try {
+		const svgSource = await fetch(logo).then((response) => response.text());
+		const svg =
+			variant === 'black'
+				? svgSource.replace(/fill="#469bd1"/gi, 'fill="#000000"')
+				: variant === 'white'
+					? svgSource.replace(/fill="#469bd1"/gi, 'fill="#FFFFFF"')
+					: svgSource;
 
-	const blob = new Blob([svg], { type: 'image/svg+xml;charset=utf-8' });
-	const url = URL.createObjectURL(blob);
-	const img = new Image();
-	img.onload = () => {
+		const blob = new Blob([svg], { type: 'image/svg+xml;charset=utf-8' });
+		const objectUrl = URL.createObjectURL(blob);
+		const img = new Image();
+		img.crossOrigin = 'anonymous';
+
+		await new Promise((resolve, reject) => {
+			img.onload = resolve;
+			img.onerror = reject;
+			img.src = objectUrl;
+		});
+
 		const canvas = document.createElement('canvas');
 		canvas.width = 2000;
 		canvas.height = 500;
 		const context = canvas.getContext('2d');
 		context.clearRect(0, 0, canvas.width, canvas.height);
 		context.drawImage(img, 0, 0, canvas.width, canvas.height);
-		canvas.toBlob((pngBlob) => {
-			if (!pngBlob) return;
-			const pngUrl = URL.createObjectURL(pngBlob);
-			const link = document.createElement('a');
-			link.href = pngUrl;
-			link.download = `jhu-logo-${variant === 'transparent' ? 'transparent' : `one-color-${variant}`}.png`;
-			link.click();
-			URL.revokeObjectURL(pngUrl);
-			URL.revokeObjectURL(url);
-		}, 'image/png');
-	};
-	img.src = url;
+
+		const pngBlob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/png'));
+		if (!pngBlob) {
+			throw new Error('Could not create PNG blob');
+		}
+
+		const pngUrl = URL.createObjectURL(pngBlob);
+		const link = document.createElement('a');
+		link.href = pngUrl;
+		link.download = variant === 'transparent' ? 'jhu-logo-transparent.png' : variant === 'black' ? 'jhu-logo-one-color-black.png' : 'jhu-logo-one-color-white.png';
+		document.body.appendChild(link);
+		link.click();
+		link.remove();
+
+		URL.revokeObjectURL(pngUrl);
+		URL.revokeObjectURL(objectUrl);
+	} catch (error) {
+		console.error('Logo download failed:', error);
+	}
 };
 
 const palette = [
