@@ -64,22 +64,22 @@ const palette = [
 	{
 		name: 'Black',
 		hex: '#000000',
-		rgb: 'RGB(0, 0, 0)',
-		usage: 'Black is for the runner, wordmark, headlines, and text.',
+		rgb: 'RGB 0, 0, 0',
+		usage: 'Runner, wordmark, headlines, text',
 		accent: 'bg-black text-white',
 	},
 	{
 		name: 'Logo Blue',
 		hex: '#5D99CC',
-		rgb: 'RGB(93, 153, 204)',
-		usage: 'Logo Blue is for links, buttons, highlights, and strategic accents.',
+		rgb: 'RGB 93, 153, 204',
+		usage: 'The U, links, buttons, small accents only',
 		accent: 'bg-[#5D99CC] text-white',
 	},
 	{
 		name: 'Off-White',
 		hex: '#FAFAF9',
-		rgb: 'RGB(250, 250, 249)',
-		usage: 'Off-White is for subtle backgrounds, framing, and supporting surfaces.',
+		rgb: 'RGB 250, 250, 249',
+		usage: 'Page background',
 		accent: 'bg-[#FAFAF9] text-black',
 	},
 ];
@@ -119,8 +119,9 @@ const BrandGuidePage = () => {
 				<title>Brand Guide | JobHuntingU</title>
 				<meta
 					name="description"
-					content="Brand guide for JobHuntingU covering logo usage, colour palette, typography, voice, and downloadable assets."
+					content="Brand guide for JobHuntingU covering logo usage, colour palette, and typography."
 				/>
+				<link rel="stylesheet" href="https://fonts.cdnfonts.com/css/norwester" type="text/css" />
 			</Helmet>
 
 			<main className="bg-background text-foreground">
@@ -162,10 +163,10 @@ const BrandGuidePage = () => {
 							<Card className="border border-border bg-card/80 shadow-brand">
 								<CardContent className="space-y-5 p-6 md:p-8">
 									<p className="text-base leading-relaxed text-muted-foreground">
-										The Job Hunting U logo combines a black running figure facing right with the bold condensed wordmark “JOB HUNTING.” The icon represents momentum, action, and forward motion, while the wordmark delivers clarity and authority. Only the “U” is set in blue to create a memorable brand accent and signal the final, outcome-focused step in the customer journey.
+										Follow the guidelines below when using the logo for any purpose.
 									</p>
 									<p className="text-base leading-relaxed text-muted-foreground">
-										The system is designed to stay legible across digital, print, and promotional assets while remaining strong in single-colour and full-colour use.
+										The logo is a black running figure, mid-stride, facing right, next to 'JOB HUNTING' in bold condensed black capitals, with only the final U in blue (#5D99CC). The runner and the wordmark are one lockup.
 									</p>
 								</CardContent>
 							</Card>
@@ -247,10 +248,10 @@ const BrandGuidePage = () => {
 								</CardHeader>
 								<CardContent>
 									<ul className="space-y-3 text-muted-foreground">
-										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Use the logo on website headers, social graphics, proposals, and marketing materials.</span></li>
-										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Use the full-colour version on white or off-white backgrounds.</span></li>
-										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Clear space: keep at least half the height of the “U” around the mark on all sides.</span></li>
-										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Minimum size: 120 px wide on screen or 25 mm wide in print.</span></li>
+										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Use the logo to market any Job Hunting U material.</span></li>
+										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Use the logo for both print and web content.</span></li>
+										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Use the high-resolution version of the logo for print.</span></li>
+										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Use the full-colour logo on white or off-white wherever possible.</span></li>
 									</ul>
 								</CardContent>
 							</Card>
@@ -261,73 +262,10 @@ const BrandGuidePage = () => {
 								</CardHeader>
 								<CardContent>
 									<ul className="space-y-3 text-muted-foreground">
-										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Do not stretch, distort, rotate, flip, or crop the logo.</span></li>
-										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Do not change the colour balance or swap the blue accent.</span></li>
-										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Do not reduce below the minimum size or place the mark inside the required clear-space area.</span></li>
-										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Do not use the mark in a way that weakens the brand or makes the message harder to read.</span></li>
-									</ul>
-								</CardContent>
-							</Card>
-						</div>
-					</div>
-				</section>
-
-				<section className="py-20 bg-background">
-					<div className="section-container">
-						<motion.div {...fadeInUp} className="mb-10">
-							<p className="mb-3 text-sm font-bold uppercase tracking-[0.15em] text-primary">
-								Voice and Tone
-							</p>
-							<h2 className="text-3xl font-bold tracking-[-0.04em] md:text-4xl">
-								Direct, practical, and outcome-first.
-							</h2>
-						</motion.div>
-
-						<motion.div
-							{...fadeInUp}
-							className="rounded-3xl border border-border bg-[linear-gradient(135deg,rgba(93,153,204,0.08),rgba(15,23,42,0.02))] p-6 md:p-8 shadow-brand"
-						>
-							<p className="max-w-5xl text-base leading-relaxed text-muted-foreground md:text-lg">
-								The brand should sound like a coach who knows the game and cuts through the noise. Clear, practical, and confident. No fluff. No vague promises. No jargon for its own sake. Every message should help someone make a better decision, take a smarter action, or move closer to the right role.
-							</p>
-						</motion.div>
-					</div>
-				</section>
-
-				<section className="py-20 bg-muted/30">
-					<div className="section-container">
-						<motion.div {...fadeInUp} className="mb-10">
-							<p className="mb-3 text-sm font-bold uppercase tracking-[0.15em] text-primary">
-								Typography
-							</p>
-							<h2 className="text-3xl font-bold tracking-[-0.04em] md:text-4xl">
-								Clean, high-contrast, and easy to read.
-							</h2>
-						</motion.div>
-
-						<div className="grid gap-6 lg:grid-cols-2">
-							<Card className="border border-border bg-card shadow-brand">
-								<CardHeader>
-									<CardTitle className="text-2xl">Headlines</CardTitle>
-								</CardHeader>
-								<CardContent>
-									<ul className="space-y-3 text-muted-foreground">
-										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Use bold, high-contrast layouts with strong weight and tight tracking.</span></li>
-										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Keep headlines short, clear, and action-oriented.</span></li>
-										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Use uppercase sparingly for emphasis and hierarchy.</span></li>
-									</ul>
-								</CardContent>
-							</Card>
-
-							<Card className="border border-border bg-card shadow-brand">
-								<CardHeader>
-									<CardTitle className="text-2xl">Body Copy</CardTitle>
-								</CardHeader>
-								<CardContent>
-									<ul className="space-y-3 text-muted-foreground">
-										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Use strong contrast and readable rhythm to keep headlines and body copy clear.</span></li>
-										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Prioritize readability over decorative styling.</span></li>
-										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Keep line length comfortable and spacing generous enough to feel calm and clear.</span></li>
+										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Do not cut, adjust, rotate, flip, reflect, or manipulate the logo.</span></li>
+										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Do not change the colour of the logo.</span></li>
+										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Do not retype the wordmark in another font.</span></li>
+										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Do not use the logo for non-Job Hunting U material.</span></li>
 									</ul>
 								</CardContent>
 							</Card>
@@ -342,11 +280,15 @@ const BrandGuidePage = () => {
 								Colours
 							</p>
 							<h2 className="text-3xl font-bold tracking-[-0.04em] md:text-4xl">
-								Colour Policy
+								Colour palette and usage
 							</h2>
 						</motion.div>
 
-						<div className="mb-10 grid gap-6 md:grid-cols-3">
+						<p className="mb-8 max-w-4xl text-base leading-relaxed text-muted-foreground md:text-lg">
+							The Job Hunting U colour palette reflects our brand personality — Direct, In Motion, and Outcome-First. We show our Direct side through our core black, which is bold and high-contrast. We show our In Motion side through our logo blue, which pulls the eye forward to the U. We show our clear, professional side with our off-white.
+						</p>
+
+						<div className="mb-8 grid gap-6 md:grid-cols-3">
 							{palette.map((color) => (
 								<motion.button
 									key={color.hex}
@@ -370,13 +312,18 @@ const BrandGuidePage = () => {
 									<div className="bg-white/80 p-4 text-black">
 										<div className="mb-2 inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.12em] text-[#5D99CC]">
 											<Copy className="h-3.5 w-3.5" />
-											HEX {color.hex}
+											<span>HEX {color.hex}</span>
+											<span className="text-foreground/70">{color.rgb}</span>
 										</div>
 										<p className="text-sm leading-relaxed text-muted-foreground">{color.usage}</p>
 									</div>
 								</motion.button>
 							))}
 						</div>
+
+						<p className="mb-10 text-base leading-relaxed text-muted-foreground">
+							Black, blue, and off-white are sampled from the supplied logo file. Blue is an accent, not a background colour.
+						</p>
 
 						<div className="grid gap-6 md:grid-cols-2">
 							<Card className="border border-border bg-card shadow-brand">
@@ -385,10 +332,9 @@ const BrandGuidePage = () => {
 								</CardHeader>
 								<CardContent>
 									<ul className="space-y-3 text-muted-foreground">
-										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Use the full palette across the website, print collateral, and social touchpoints.</span></li>
-										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Use black for headlines, text, and the core mark to establish contrast and authority.</span></li>
-										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Use blue for links, CTAs, hover states, and small emphasis details.</span></li>
-										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Use off-white as the primary background to keep content crisp, calm, and premium.</span></li>
+										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Use these colours for all material on the Job Hunting U site.</span></li>
+										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Use these colours for any Job Hunting U flyers, ads, or other company materials.</span></li>
+										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Colours should be used as intended (black headlines and text, blue buttons and links, off-white backgrounds).</span></li>
 									</ul>
 								</CardContent>
 							</Card>
@@ -399,16 +345,103 @@ const BrandGuidePage = () => {
 								</CardHeader>
 								<CardContent>
 									<ul className="space-y-3 text-muted-foreground">
-										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Do not introduce alternate shades, tints, or colour variations outside the approved palette.</span></li>
-										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Do not apply blue as a replacement for body text or black as a background for reading.</span></li>
-										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Do not swap the functional purpose of each colour in a way that weakens hierarchy.</span></li>
-										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Do not use the palette in a way that reduces contrast or creates inconsistency.</span></li>
+										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Do not use slight variations of these colours.</span></li>
+										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Do not use completely different colours.</span></li>
+										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Do not swap colour purposes (e.g. no blue headlines as the default).</span></li>
 									</ul>
 								</CardContent>
 							</Card>
 						</div>
 					</div>
 				</section>
+
+				<section id="typography" className="py-20 bg-background">
+					<div className="section-container">
+						<motion.div {...fadeInUp} className="mb-10">
+							<p className="mb-3 text-sm font-bold uppercase tracking-[0.15em] text-primary">
+								Typography
+							</p>
+							<h2 className="text-3xl font-bold tracking-[-0.04em] md:text-4xl">
+								Clean, high-contrast, and easy to read.
+							</h2>
+						</motion.div>
+
+						<div className="grid gap-6 lg:grid-cols-2">
+							<Card className="border border-border bg-card shadow-brand">
+								<CardHeader>
+									<CardTitle className="text-2xl">Headlines</CardTitle>
+								</CardHeader>
+								<CardContent className="space-y-4">
+									<div className="text-sm font-bold uppercase tracking-[0.12em] text-muted-foreground">
+										Role: Headlines
+									</div>
+									<div className="text-sm font-bold uppercase tracking-[0.12em] text-muted-foreground">
+										Font: Norwester
+									</div>
+									<div className="rounded-xl border border-border bg-[#FAFAF9] p-4 text-3xl uppercase leading-none tracking-[-0.04em] text-black" style={{ fontFamily: "'Norwester', sans-serif" }}>
+										JOB HUNTING
+									</div>
+									<p className="text-sm leading-relaxed text-muted-foreground">
+										Use: "Headlines, subheads, buttons. All caps, black (white on dark)."
+									</p>
+								</CardContent>
+							</Card>
+
+							<Card className="border border-border bg-card shadow-brand">
+								<CardHeader>
+									<CardTitle className="text-2xl">Body</CardTitle>
+								</CardHeader>
+								<CardContent className="space-y-4">
+									<div className="text-sm font-bold uppercase tracking-[0.12em] text-muted-foreground">
+										Role: Body
+									</div>
+									<div className="text-sm font-bold uppercase tracking-[0.12em] text-muted-foreground">
+										Font: DM Sans
+									</div>
+									<div className="space-y-2 rounded-xl border border-border bg-[#FAFAF9] p-4 text-base">
+										<p style={{ fontFamily: 'DM Sans, sans-serif', fontWeight: 400 }}>DM Sans regular — clear, open body text for the website.</p>
+										<p style={{ fontFamily: 'DM Sans, sans-serif', fontWeight: 500 }}>DM Sans medium — emphasis for subheads and callouts.</p>
+										<p style={{ fontFamily: 'DM Sans, sans-serif', fontWeight: 700 }}>DM Sans bold — strong emphasis for buttons and key actions.</p>
+									</div>
+									<p className="text-sm leading-relaxed text-muted-foreground">
+										Use: "Body text, captions, forms. Regular for body, medium / bold for emphasis. DM Sans is the font already used on jobhuntingu.com."
+									</p>
+								</CardContent>
+							</Card>
+						</div>
+
+						<div className="mt-8">
+							<Card className="border border-border bg-card/80 shadow-brand">
+								<CardContent className="p-6 md:p-8">
+									<p className="text-base leading-relaxed text-muted-foreground">
+										"Norwester is a condensed geometric sans serif by Jamie Wilson, free under the Open Font Licence. It is the closest style match to the logo letters we found: the J, B, G and U shapes match, and squished to 80% width it lines up with the logo in width too. It is not proven to be the original logo font — the logo is an image, and its exact font can only be confirmed from the designer's original file."
+									</p>
+								</CardContent>
+							</Card>
+						</div>
+
+						<div className="mt-8">
+							<Card className="border border-border bg-card shadow-brand">
+								<CardHeader>
+									<CardTitle className="text-2xl">Typography Rules</CardTitle>
+								</CardHeader>
+								<CardContent>
+									<ul className="space-y-3 text-muted-foreground">
+										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Never retype the logo. Use the logo image file.</span></li>
+										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Do not stretch or squash Norwester in use (the 80% test was a comparison, not a rule).</span></li>
+										<li className="flex gap-3"><span className="mt-1 text-[#5D99CC] text-lg">•</span><span>Norwester has a single weight: use size and colour for hierarchy, do not fake-bold it.</span></li>
+									</ul>
+								</CardContent>
+							</Card>
+						</div>
+					</div>
+				</section>
+
+				<div className="section-container pb-12 pt-4">
+					<p className="text-center text-xs italic text-muted-foreground/80">
+						Draft for Jerry's approval. Logo files are still to be confirmed — this short guide does not invent them.
+					</p>
+				</div>
 			</main>
 		</>
 	);
