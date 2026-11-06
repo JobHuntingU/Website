@@ -295,12 +295,15 @@ const BrandGuidePage = () => {
 									type="button"
 									onClick={copyHex}
 									data-hex={color.hex}
-									className={`group overflow-hidden rounded-2xl border border-border bg-card text-left shadow-brand transition-all duration-200 hover:-translate-y-1 ${color.accent}`}
+									className={`group overflow-hidden rounded-2xl border border-border text-left shadow-brand transition-all duration-200 hover:-translate-y-1 ${color.accent}`}
 									whileHover={{ y: -4 }}
 									whileTap={{ scale: 0.98 }}
 									aria-label={`Copy ${color.name} hex code`}
 								>
-									<div className="flex min-h-[170px] flex-col justify-end p-4">
+									<div
+										className="flex min-h-[170px] flex-col justify-end p-4"
+										style={{ backgroundColor: color.hex, color: color.hex === '#FAFAF9' ? '#000000' : '#FFFFFF' }}
+									>
 										<div className="mb-4 flex items-center justify-between gap-2 text-[10px] font-bold uppercase tracking-[0.12em]">
 											<span>{color.name}</span>
 											<span className="inline-flex items-center rounded-full border border-current/20 bg-black/5 px-2 py-1" data-copy-status>
@@ -382,7 +385,7 @@ const BrandGuidePage = () => {
 										JOB HUNTING
 									</div>
 									<p className="text-sm leading-relaxed text-muted-foreground">
-										Use: "Headlines, subheads, buttons. All caps, black (white on dark)."
+										Use: Headlines, subheads, buttons. All caps, black (white on dark).
 									</p>
 								</CardContent>
 							</Card>
@@ -404,7 +407,7 @@ const BrandGuidePage = () => {
 										<p style={{ fontFamily: 'DM Sans, sans-serif', fontWeight: 700 }}>DM Sans bold — strong emphasis for buttons and key actions.</p>
 									</div>
 									<p className="text-sm leading-relaxed text-muted-foreground">
-										Use: "Body text, captions, forms. Regular for body, medium / bold for emphasis. DM Sans is the font already used on jobhuntingu.com."
+										Use: Body text, captions, forms. Regular for body, medium / bold for emphasis. DM Sans is the font already used on jobhuntingu.com.
 									</p>
 								</CardContent>
 							</Card>
@@ -414,7 +417,7 @@ const BrandGuidePage = () => {
 							<Card className="border border-border bg-card/80 shadow-brand">
 								<CardContent className="p-6 md:p-8">
 									<p className="text-base leading-relaxed text-muted-foreground">
-										"Norwester is a condensed geometric sans serif by Jamie Wilson, free under the Open Font Licence. It is the closest style match to the logo letters we found: the J, B, G and U shapes match, and squished to 80% width it lines up with the logo in width too. It is not proven to be the original logo font — the logo is an image, and its exact font can only be confirmed from the designer's original file."
+										Norwester is a condensed geometric sans serif by Jamie Wilson, free under the Open Font Licence. It is the closest style match to the logo letters we found: the J, B, G and U shapes match, and squished to 80% width it lines up with the logo in width too. It is not proven to be the original logo font — the logo is an image, and its exact font can only be confirmed from the designer's original file.
 									</p>
 								</CardContent>
 							</Card>
@@ -436,12 +439,6 @@ const BrandGuidePage = () => {
 						</div>
 					</div>
 				</section>
-
-				<div className="section-container pb-12 pt-4">
-					<p className="text-center text-xs italic text-muted-foreground/80">
-						Draft for Jerry's approval. Logo files are still to be confirmed — this short guide does not invent them.
-					</p>
-				</div>
 			</main>
 		</>
 	);
