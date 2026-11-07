@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import logo from '@/assets/Logo_1.svg';
@@ -98,7 +97,7 @@ const Footer = () => {
 
         {/* Bottom Bar */}
         <div className="mt-12 flex flex-col items-center justify-between space-y-4 border-t pt-8 text-sm md:flex-row md:space-y-0">
-          <p>© {currentYear} JobHuntingU. All rights reserved.</p>
+          <p>© 2026 JobHuntingU</p>
           <div className="flex space-x-6">
             <Link to="/privacy" className="transition-colors duration-200 hover:text-foreground">
               Privacy Policy

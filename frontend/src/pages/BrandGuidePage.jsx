@@ -112,6 +112,8 @@ const fadeInUp = {
 	transition: { duration: 0.5 },
 };
 
+const headingStyle = { fontFamily: "'Norwester', sans-serif" };
+
 const BrandGuidePage = () => {
 	return (
 		<>
@@ -124,15 +126,18 @@ const BrandGuidePage = () => {
 				<link rel="stylesheet" href="https://fonts.cdnfonts.com/css/norwester" type="text/css" />
 			</Helmet>
 
-			<main className="bg-background text-foreground">
-				<section className="relative overflow-hidden bg-slate-900 text-white">
+			<main className="bg-[#FAFAF9] text-black">
+				<section className="relative overflow-hidden bg-black text-white">
 					<div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(93,153,204,0.40),_transparent_45%)]" />
 					<div className="section-container relative z-10 py-24 md:py-28">
 						<motion.div {...fadeInUp} className="mx-auto max-w-4xl text-center">
-							<p className="mb-4 text-sm font-bold uppercase tracking-[0.18em] text-primary">
+							<p className="mb-4 text-sm font-bold uppercase tracking-[0.18em] text-[#5D99CC]">
 								Brand Guide
 							</p>
-							<h1 className="mb-6 text-4xl font-black leading-tight tracking-[-0.05em] md:text-5xl lg:text-6xl">
+							<h1
+								style={headingStyle}
+								className="mb-6 uppercase font-normal tracking-wide text-white"
+							>
 								Clarity. Momentum. Results.
 							</h1>
 							<p className="mx-auto max-w-3xl text-lg leading-relaxed text-white/80 md:text-xl">
@@ -142,25 +147,25 @@ const BrandGuidePage = () => {
 					</div>
 				</section>
 
-				<section id="logo-guidelines" className="py-20 bg-background">
+				<section id="logo-guidelines" className="py-20 bg-[#FAFAF9]">
 					<div className="section-container">
 						<motion.div {...fadeInUp} className="mb-10">
-							<p className="mb-3 text-sm font-bold uppercase tracking-[0.15em] text-primary">
+							<p className="mb-3 text-sm font-bold uppercase tracking-[0.15em] text-[#5D99CC]">
 								Logo Guidelines
 							</p>
-							<h2 className="text-3xl font-bold tracking-[-0.04em] md:text-4xl">
+							<h2 style={headingStyle} className="uppercase font-normal tracking-wide text-black text-3xl md:text-4xl">
 								The mark is built for motion and clarity.
 							</h2>
 						</motion.div>
 
 						<motion.div {...fadeInUp} className="grid gap-6 lg:grid-cols-[1.1fr_1.2fr]">
-							<Card className="overflow-hidden border border-border bg-card/80 shadow-brand">
+							<Card className="overflow-hidden border border-border bg-white shadow-brand">
 								<div className="flex min-h-[260px] items-center justify-center bg-[#FAFAF9] p-8">
 									<img src={logo} alt="JobHuntingU logo" className="h-24 w-auto max-w-full sm:h-28" />
 								</div>
 							</Card>
 
-							<Card className="border border-border bg-card/80 shadow-brand">
+							<Card className="border border-border bg-white shadow-brand">
 								<CardContent className="space-y-5 p-6 md:p-8">
 									<p className="text-base leading-relaxed text-muted-foreground">
 										Follow the guidelines below when using the logo for any purpose.
@@ -174,20 +179,20 @@ const BrandGuidePage = () => {
 					</div>
 				</section>
 
-				<section className="py-20 bg-muted/30">
+				<section className="py-20 bg-[#FAFAF9]">
 					<div className="section-container">
 						<motion.div {...fadeInUp} className="mb-10">
-							<p className="mb-3 text-sm font-bold uppercase tracking-[0.15em] text-primary">
+							<p className="mb-3 text-sm font-bold uppercase tracking-[0.15em] text-[#5D99CC]">
 								Logo Downloads
 							</p>
-							<h2 className="text-3xl font-bold tracking-[-0.04em] md:text-4xl">
+							<h2 style={headingStyle} className="uppercase font-normal tracking-wide text-black text-3xl md:text-4xl">
 								Ready for designers and partners.
 							</h2>
 						</motion.div>
 
 						<div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
 							{logoDownloads.map((item) => (
-								<Card key={item.title} className="border border-border bg-card shadow-brand">
+								<Card key={item.title} className="border border-border bg-white shadow-brand">
 									<CardContent className="p-5">
 										<div className="mb-4 flex items-center justify-between">
 											<div className="rounded-full bg-[#5D99CC]/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-[#5D99CC]">
@@ -230,21 +235,21 @@ const BrandGuidePage = () => {
 					</div>
 				</section>
 
-				<section className="py-20 bg-muted/30">
+				<section className="py-20 bg-[#FAFAF9]">
 					<div className="section-container">
 						<motion.div {...fadeInUp} className="mb-10">
-							<p className="mb-3 text-sm font-bold uppercase tracking-[0.15em] text-primary">
+							<p className="mb-3 text-sm font-bold uppercase tracking-[0.15em] text-[#5D99CC]">
 								Logo Policy
 							</p>
-							<h2 className="text-3xl font-bold tracking-[-0.04em] md:text-4xl">
+							<h2 style={headingStyle} className="uppercase font-normal tracking-wide text-black text-3xl md:text-4xl">
 								Clear rules, easy to enforce.
 							</h2>
 						</motion.div>
 
 						<div className="grid gap-6 md:grid-cols-2">
-							<Card className="border border-border bg-card shadow-brand">
+							<Card className="border border-border bg-white shadow-brand">
 								<CardHeader>
-									<CardTitle className="text-2xl">Allowed</CardTitle>
+									<CardTitle style={headingStyle} className="text-2xl uppercase font-normal tracking-wide text-black">Allowed</CardTitle>
 								</CardHeader>
 								<CardContent>
 									<ul className="space-y-3 text-muted-foreground">
@@ -256,9 +261,9 @@ const BrandGuidePage = () => {
 								</CardContent>
 							</Card>
 
-							<Card className="border border-border bg-card shadow-brand">
+							<Card className="border border-border bg-white shadow-brand">
 								<CardHeader>
-									<CardTitle className="text-2xl">Not Allowed</CardTitle>
+									<CardTitle style={headingStyle} className="text-2xl uppercase font-normal tracking-wide text-black">Not Allowed</CardTitle>
 								</CardHeader>
 								<CardContent>
 									<ul className="space-y-3 text-muted-foreground">
@@ -273,13 +278,13 @@ const BrandGuidePage = () => {
 					</div>
 				</section>
 
-				<section id="colours" className="py-20 bg-muted/30">
+				<section id="colours" className="py-20 bg-[#FAFAF9]">
 					<div className="section-container">
 						<motion.div {...fadeInUp} className="mb-10">
-							<p className="mb-3 text-sm font-bold uppercase tracking-[0.15em] text-primary">
+							<p className="mb-3 text-sm font-bold uppercase tracking-[0.15em] text-[#5D99CC]">
 								Colours
 							</p>
-							<h2 className="text-3xl font-bold tracking-[-0.04em] md:text-4xl">
+							<h2 style={headingStyle} className="uppercase font-normal tracking-wide text-black text-3xl md:text-4xl">
 								Colour palette and usage
 							</h2>
 						</motion.div>
@@ -312,7 +317,7 @@ const BrandGuidePage = () => {
 										</div>
 										<div className="text-lg font-bold">{color.hex}</div>
 									</div>
-									<div className="bg-white/80 p-4 text-black">
+									<div className="bg-white p-4 text-black">
 										<div className="mb-2 inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.12em] text-[#5D99CC]">
 											<Copy className="h-3.5 w-3.5" />
 											<span>HEX {color.hex}</span>
@@ -329,9 +334,9 @@ const BrandGuidePage = () => {
 						</p>
 
 						<div className="grid gap-6 md:grid-cols-2">
-							<Card className="border border-border bg-card shadow-brand">
+							<Card className="border border-border bg-white shadow-brand">
 								<CardHeader>
-									<CardTitle className="text-2xl">Allowed</CardTitle>
+									<CardTitle style={headingStyle} className="text-2xl uppercase font-normal tracking-wide text-black">Allowed</CardTitle>
 								</CardHeader>
 								<CardContent>
 									<ul className="space-y-3 text-muted-foreground">
@@ -342,9 +347,9 @@ const BrandGuidePage = () => {
 								</CardContent>
 							</Card>
 
-							<Card className="border border-border bg-card shadow-brand">
+							<Card className="border border-border bg-white shadow-brand">
 								<CardHeader>
-									<CardTitle className="text-2xl">Not Allowed</CardTitle>
+									<CardTitle style={headingStyle} className="text-2xl uppercase font-normal tracking-wide text-black">Not Allowed</CardTitle>
 								</CardHeader>
 								<CardContent>
 									<ul className="space-y-3 text-muted-foreground">
@@ -358,21 +363,21 @@ const BrandGuidePage = () => {
 					</div>
 				</section>
 
-				<section id="typography" className="py-20 bg-background">
+				<section id="typography" className="py-20 bg-[#FAFAF9]">
 					<div className="section-container">
 						<motion.div {...fadeInUp} className="mb-10">
-							<p className="mb-3 text-sm font-bold uppercase tracking-[0.15em] text-primary">
+							<p className="mb-3 text-sm font-bold uppercase tracking-[0.15em] text-[#5D99CC]">
 								Typography
 							</p>
-							<h2 className="text-3xl font-bold tracking-[-0.04em] md:text-4xl">
+							<h2 style={headingStyle} className="uppercase font-normal tracking-wide text-black text-3xl md:text-4xl">
 								Clean, high-contrast, and easy to read.
 							</h2>
 						</motion.div>
 
 						<div className="grid gap-6 lg:grid-cols-2">
-							<Card className="border border-border bg-card shadow-brand">
+							<Card className="border border-border bg-white shadow-brand">
 								<CardHeader>
-									<CardTitle className="text-2xl">Headlines</CardTitle>
+									<CardTitle style={headingStyle} className="text-2xl uppercase font-normal tracking-wide text-black">Headlines</CardTitle>
 								</CardHeader>
 								<CardContent className="space-y-4">
 									<div className="text-sm font-bold uppercase tracking-[0.12em] text-muted-foreground">
@@ -390,9 +395,9 @@ const BrandGuidePage = () => {
 								</CardContent>
 							</Card>
 
-							<Card className="border border-border bg-card shadow-brand">
+							<Card className="border border-border bg-white shadow-brand">
 								<CardHeader>
-									<CardTitle className="text-2xl">Body</CardTitle>
+									<CardTitle style={headingStyle} className="text-2xl uppercase font-normal tracking-wide text-black">Body</CardTitle>
 								</CardHeader>
 								<CardContent className="space-y-4">
 									<div className="text-sm font-bold uppercase tracking-[0.12em] text-muted-foreground">
@@ -414,7 +419,7 @@ const BrandGuidePage = () => {
 						</div>
 
 						<div className="mt-8">
-							<Card className="border border-border bg-card/80 shadow-brand">
+							<Card className="border border-border bg-white/80 shadow-brand">
 								<CardContent className="p-6 md:p-8">
 									<p className="text-base leading-relaxed text-muted-foreground">
 										Norwester is a condensed geometric sans serif by Jamie Wilson, free under the Open Font Licence. It is the closest style match to the logo letters we found: the J, B, G and U shapes match, and squished to 80% width it lines up with the logo in width too. It is not proven to be the original logo font — the logo is an image, and its exact font can only be confirmed from the designer's original file.
@@ -424,9 +429,9 @@ const BrandGuidePage = () => {
 						</div>
 
 						<div className="mt-8">
-							<Card className="border border-border bg-card shadow-brand">
+							<Card className="border border-border bg-white shadow-brand">
 								<CardHeader>
-									<CardTitle className="text-2xl">Typography Rules</CardTitle>
+									<CardTitle style={headingStyle} className="text-2xl uppercase font-normal tracking-wide text-black">Typography Rules</CardTitle>
 								</CardHeader>
 								<CardContent>
 									<ul className="space-y-3 text-muted-foreground">
